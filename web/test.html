@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="viewport" content="width=device-width"><title>Mic Test</title></head>
+<body style="background:#111;color:#fff;font-family:system-ui;padding:20px;">
+<h2>Safari MediaRecorder Test</h2>
+<div id="log" style="white-space:pre-wrap;font-size:14px;"></div>
+<button id="btn" style="padding:20px 40px;font-size:18px;margin-top:20px;">Hold to Record</button>
+<script>
+const log = document.getElementById('log');
+const btn = document.getElementById('btn');
+function l(msg) { log.textContent += msg + '\n'; }
+
+let stream, recorder, chunks = [];
+
+async function init() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    l('Mic access: OK');
+    l('Tracks: ' + stream.getAudioTracks().map(t => t.label + ' (' + t.readyState + ')').join(', '));
+    
+    // Test supported types
+    for (const t of ['audio/mp4', 'audio/mp4;codecs=opus', 'audio/aac', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg', '']) {
+      if (t === '') { l('  (empty string): default'); continue; }
+      try {
+        l('  ' + t + ': ' + (MediaRecorder.isTypeSupported(t) ? 'YES' : 'no'));
+      } catch(e) { l('  ' + t + ': error ' + e.message); }
+    }
+    
+    // Try creating a MediaRecorder
+    let mime = '';
+    for (const c of ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', '']) {
+      if (c === '' || MediaRecorder.isTypeSupported(c)) { mime = c; break; }
+    }
+    l('Selected MIME: "' + mime + '"');
+    
+    const opts = mime ? { mimeType: mime } : {};
+    recorder = new MediaRecorder(stream, opts);
+    l('MediaRecorder created. mimeType: "' + recorder.mimeType + '" state: ' + recorder.state);
+    
+    recorder.ondataavailable = (e) => {
+      l('ondataavailable: size=' + e.data.size + ' type="' + e.data.type + '"');
+      if (e.data.size > 0) chunks.push(e.data);
+    };
+    recorder.onstart = () => l('onstart fired');
+    recorder.onstop = () => {
+      l('onstop fired. chunks=' + chunks.length + ' total=' + chunks.reduce((s,c) => s+c.size, 0) + ' bytes');
+      if (chunks.length > 0) {
+        const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/mp4' });
+        l('Blob: size=' + blob.size + ' type="' + blob.type + '"');
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        audio.play().then(() => l('Playback started!')).catch(e => l('Playback failed: ' + e.message));
+      }
+    };
+    recorder.onerror = (e) => l('onerror: ' + (e.error ? e.error.message : JSON.stringify(e)));
+    
+    l('\nReady. Hold button to test.');
+  } catch(e) {
+    l('ERROR: ' + e.message);
+  }
+}
+
+btn.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  if (!recorder) return;
+  chunks = [];
+  try {
+    recorder.start();
+    l('\nRecording started...');
+    btn.style.background = 'red';
+    btn.textContent = 'Recording...';
+  } catch(e) { l('start() error: ' + e.message); }
+}, {passive:false});
+
+btn.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  if (!recorder || recorder.state !== 'recording') return;
+  try {
+    recorder.stop();
+    l('stop() called');
+    btn.style.background = '';
+    btn.textContent = 'Hold to Record';
+  } catch(e) { l('stop() error: ' + e.message); }
+});
+
+btn.addEventListener('mousedown', () => {
+  if (!recorder) return;
+  chunks = [];
+  try { recorder.start(); l('\nRecording...'); btn.style.background='red'; } catch(e) { l('start error: '+e.message); }
+});
+btn.addEventListener('mouseup', () => {
+  if (!recorder || recorder.state !== 'recording') return;
+  try { recorder.stop(); btn.style.background=''; } catch(e) { l('stop error: '+e.message); }
+});
+
+init();
+</script>
+</body>
+</html>

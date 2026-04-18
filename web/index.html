@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#08080F">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Holler</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #08080F;
+  --surface: #12121C;
+  --border: #26263A;
+  --text: #F5F5FA;
+  --text-dim: #8888A0;
+  --accent: #FF6B47;
+  --online: #2D8659;
+  --recording: #E53935;
+  --sent: #2D8659;
+  --radius: 16px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* --- Join Screen --- */
+#join-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 24px;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -2px;
+  margin-bottom: 8px;
+}
+
+.logo-sub {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-top: -12px;
+  margin-bottom: 16px;
+}
+
+.input-group {
+  width: 100%;
+  max-width: 320px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: var(--accent);
+}
+
+.input-group input::placeholder {
+  color: var(--text-dim);
+  opacity: 0.6;
+}
+
+.btn-connect {
+  width: 100%;
+  max-width: 320px;
+  padding: 16px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+
+.btn-connect:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.btn-connect:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.join-error {
+  color: var(--recording);
+  font-size: 13px;
+  text-align: center;
+  min-height: 20px;
+}
+
+/* --- Talk Screen --- */
+#talk-screen {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  height: 100dvh;
+}
+
+/* Status bar */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top, 12px));
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.status-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--online);
+  transition: background 0.3s;
+}
+
+.status-dot.disconnected {
+  background: var(--recording);
+}
+
+.status-dot.connecting {
+  background: #FFA726;
+  animation: pulse-dot 1s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.status-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.status-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-settings {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+/* Members bar */
+.members-bar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.members-bar:empty {
+  display: none;
+}
+
+.member-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.member-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--online);
+  flex-shrink: 0;
+}
+
+.member-dot.offline {
+  background: var(--text-dim);
+  opacity: 0.5;
+}
+
+/* Messages */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.msg {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  max-width: 85%;
+  animation: msg-in 0.2s ease-out;
+}
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.msg.incoming {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  align-self: flex-start;
+}
+
+.msg.outgoing {
+  background: #1a2a1f;
+  border: 1px solid #2a3a2f;
+  align-self: flex-end;
+}
+
+.msg-sender {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.msg.outgoing .msg-sender {
+  color: var(--online);
+}
+
+.msg-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-play {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.btn-play:active {
+  opacity: 0.7;
+}
+
+.btn-play.playing {
+  background: var(--recording);
+}
+
+.msg-duration {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.msg-time {
+  font-size: 11px;
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+
+.msg-system {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  padding: 4px 0;
+}
+
+/* PTT area */
+.ptt-area {
+  padding: 16px;
+  padding-bottom: max(16px, calc(var(--safe-bottom) + 16px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+
+.ptt-status {
+  font-size: 13px;
+  color: var(--text-dim);
+  height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ptt-status .rec-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--recording);
+  animation: pulse-dot 0.6s infinite;
+}
+
+.ptt-btn {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  -webkit-touch-callout: none;
+}
+
+.ptt-btn.recording {
+  background: var(--recording);
+  border-color: var(--recording);
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(229, 57, 53, 0.4);
+}
+
+.ptt-btn.sent {
+  background: var(--sent);
+  border-color: var(--sent);
+}
+
+.ptt-btn.cancel {
+  background: var(--text-dim);
+  border-color: var(--text-dim);
+  opacity: 0.6;
+}
+
+.input-hint {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+.passphrase-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+.word-count {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.word-count.ok { color: var(--sent); }
+.word-count.short { color: var(--recording); }
+.btn-generate {
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.msg-transcript {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 4px;
+  line-height: 1.4;
+  min-height: 0;
+}
+.msg-transcript:empty { display: none; }
+
+.btn-autoplay {
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+.btn-autoplay.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.btn-share {
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+
+/* Settings modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  padding: 24px;
+  padding-bottom: max(24px, calc(var(--safe-bottom) + 24px));
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.modal .input-group {
+  max-width: none;
+  margin-bottom: 16px;
+}
+
+.modal .btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-save {
+  flex: 1;
+  padding: 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-leave {
+  flex: 1;
+  padding: 14px;
+  background: var(--recording);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 24px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- JOIN SCREEN -->
+<div id="join-screen">
+  <div class="logo">Holler</div>
+  <div class="logo-sub">Push-to-talk for your people</div>
+  <div class="input-group">
+    <label>Your name</label>
+    <input type="text" id="input-name" placeholder="Victor" autocomplete="off" autocapitalize="words" maxlength="24">
+  </div>
+  <div class="input-group">
+    <label>Group name</label>
+    <input type="text" id="input-group" placeholder="e.g. wilson-family" autocomplete="off" autocapitalize="none" autocorrect="off" maxlength="32">
+    <div class="input-hint">Your crew's name — added to the passphrase for extra uniqueness</div>
+  </div>
+  <div class="input-group">
+    <label>Passphrase (4+ words)</label>
+    <input type="password" id="input-passphrase" placeholder="enter your room passphrase" autocomplete="off" autocapitalize="none" autocorrect="off">
+    <div class="passphrase-meta">
+      <span class="word-count" id="word-count">0 words</span>
+      <button class="btn-generate" id="btn-generate">Generate</button>
+    </div>
+  </div>
+  <div class="join-error" id="join-error"></div>
+  <button class="btn-connect" id="btn-connect">Connect</button>
+</div>
+
+<!-- TALK SCREEN -->
+<div id="talk-screen">
+  <div class="status-bar">
+    <div class="status-left">
+      <div class="status-dot connecting" id="status-dot"></div>
+      <span class="status-text" id="status-text">Connecting...</span>
+    </div>
+    <div class="status-right">
+      <button class="btn-autoplay active" id="btn-autoplay" title="Auto-play">AUTO</button>
+      <button class="btn-share" id="btn-share" title="Invite link">INVITE</button>
+      <button class="btn-settings" id="btn-settings" title="Settings">&#9881;</button>
+    </div>
+  </div>
+
+  <div class="members-bar" id="members-bar"></div>
+
+  <div class="messages" id="messages"></div>
+
+  <div class="ptt-area">
+    <div class="ptt-status" id="ptt-status"></div>
+    <button class="ptt-btn" id="ptt-btn">TALK</button>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal" style="position:relative;">
+    <h2>Settings</h2>
+    <div class="input-group">
+      <label>Display name</label>
+      <input type="text" id="settings-name" maxlength="24">
+    </div>
+    <div class="input-group">
+      <label>Relay server URL</label>
+      <input type="url" id="settings-server" placeholder="wss://...">
+    </div>
+    <div class="btn-row">
+      <button class="btn-save" id="btn-save-settings">Save</button>
+      <button class="btn-leave" id="btn-leave">Leave Room</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // --- Configuration ---
+  const DEFAULT_SERVER = (location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host;
+  const PING_INTERVAL = 25000;
+  const RECONNECT_BASE_MS = 3000;
+  const MAX_RECONNECT_MS = 30000;
+
+  // --- State ---
+  let ws = null;
+  let deviceId = localStorage.getItem('holler_device_id');
+  if (!deviceId) {
+    deviceId = crypto.randomUUID();
+    localStorage.setItem('holler_device_id', deviceId);
+  }
+
+  let displayName = localStorage.getItem('holler_name') || '';
+  let serverUrl = localStorage.getItem('holler_server') || DEFAULT_SERVER;
+  let roomHash = '';
+  let connected = false;
+  let members = [];
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let recordingStartTime = 0;
+  let recordingTimer = null;
+  let pingTimer = null;
+  let reconnectTimer = null;
+  let reconnectAttempts = 0;
+  let isRecording = false;
+  let isCancelled = false;
+  let seenMessageIds = new Set();
+  let audioQueue = [];
+  let isPlaying = false;
+  let currentAudio = null;
+  let currentPlayBtn = null;
+  let micStream = null;
+  let autoPlayEnabled = true;
+  let currentTranscript = '';
+  let currentGroupName = '';
+  let currentPassphrase = '';
+  let speechRecognition = null;
+
+  // Speech recognition setup (runs during PTT recording)
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  function startTranscription() {
+    if (!SpeechRecognition) return;
+    try {
+      speechRecognition = new SpeechRecognition();
+      speechRecognition.continuous = true;
+      speechRecognition.interimResults = true;
+      speechRecognition.lang = 'en-US';
+      speechRecognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = 0; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        currentTranscript = transcript;
+      };
+      speechRecognition.onerror = () => {}; // silent — transcription is best-effort
+      speechRecognition.start();
+    } catch {}
+  }
+  function stopTranscription() {
+    if (speechRecognition) {
+      try { speechRecognition.stop(); } catch {}
+      speechRecognition = null;
+    }
+  }
+
+  // --- DOM refs ---
+  const $joinScreen = document.getElementById('join-screen');
+  const $talkScreen = document.getElementById('talk-screen');
+  const $inputName = document.getElementById('input-name');
+  const $inputGroup = document.getElementById('input-group');
+  const $inputPassphrase = document.getElementById('input-passphrase');
+  const $wordCount = document.getElementById('word-count');
+  const $btnGenerate = document.getElementById('btn-generate');
+  const $joinError = document.getElementById('join-error');
+  const $btnConnect = document.getElementById('btn-connect');
+  const $statusDot = document.getElementById('status-dot');
+  const $statusText = document.getElementById('status-text');
+  const $membersBar = document.getElementById('members-bar');
+  const $messages = document.getElementById('messages');
+  const $pttStatus = document.getElementById('ptt-status');
+  const $pttBtn = document.getElementById('ptt-btn');
+  const $btnAutoplay = document.getElementById('btn-autoplay');
+  const $btnShare = document.getElementById('btn-share');
+  const $btnSettings = document.getElementById('btn-settings');
+  const $settingsModal = document.getElementById('settings-modal');
+  const $settingsName = document.getElementById('settings-name');
+  const $settingsServer = document.getElementById('settings-server');
+  const $btnSave = document.getElementById('btn-save-settings');
+  const $btnLeave = document.getElementById('btn-leave');
+
+  // --- Utilities ---
+  async function sha256hex(str) {
+    const data = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function uuid() {
+    return crypto.randomUUID();
+  }
+
+  function formatTime(ts) {
+    const d = new Date(ts);
+    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function formatDuration(ms) {
+    const s = Math.round(ms / 1000);
+    if (s < 60) return s + 's';
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  function vibrate(pattern) {
+    try { navigator.vibrate && navigator.vibrate(pattern); } catch {}
+  }
+
+  // --- Join ---
+  // Pre-fill from URL params (invite link)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('g')) $inputGroup.value = decodeURIComponent(urlParams.get('g'));
+  if (urlParams.has('p')) {
+    $inputPassphrase.value = decodeURIComponent(urlParams.get('p'));
+    $inputPassphrase.type = 'text'; // show it since they got it from a link
+    setTimeout(() => { $inputPassphrase.type = 'password'; }, 15000);
+  }
+  // Clean URL (remove params so they don't linger in browser history)
+  if (urlParams.has('g') || urlParams.has('p')) {
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  $inputName.value = displayName;
+
+  // Word list for passphrase generator
+  const WORDS = [
+    'alpine','amber','anchor','arrow','autumn','beacon','blaze','bloom','breeze','bridge',
+    'canyon','cedar','chase','cliff','cloud','cobalt','coral','crest','crystal','cypress',
+    'dawn','delta','drift','dusk','eagle','ember','falcon','fern','flint','forge',
+    'frost','gale','glacier','grove','harbor','hawk','haven','horizon','indigo','iron',
+    'jade','jasper','jubilee','kelp','lantern','lark','lava','lunar','maple','marble',
+    'meadow','mesa','mist','moss','nebula','north','nova','oasis','oak','ocean',
+    'olive','onyx','orbit','otter','palm','pearl','pine','plume','prism','pulse',
+    'quartz','rain','rapids','raven','reef','ridge','river','robin','ruby','sage',
+    'sand','sequoia','shadow','sierra','silver','slate','solar','spark','spruce','star',
+    'stone','storm','summit','swift','thorn','thunder','timber','trail','tulip','tundra',
+    'valley','velvet','venture','violet','vista','walnut','wave','willow','wind','winter',
+    'wolf','wren','zenith','zephyr'
+  ];
+  function generatePassphrase() {
+    const words = [];
+    for (let i = 0; i < 4; i++) {
+      words.push(WORDS[Math.floor(Math.random() * WORDS.length)]);
+    }
+    return words.join(' ');
+  }
+
+  // Word count display
+  $inputPassphrase.addEventListener('input', () => {
+    const words = $inputPassphrase.value.trim().split(/\s+/).filter(w => w.length > 0);
+    const count = words.length;
+    $wordCount.textContent = count + ' word' + (count !== 1 ? 's' : '');
+    $wordCount.className = 'word-count ' + (count >= 4 ? 'ok' : 'short');
+  });
+
+  // Generate button
+  $btnGenerate.addEventListener('click', () => {
+    const phrase = generatePassphrase();
+    $inputPassphrase.value = phrase;
+    $inputPassphrase.type = 'text'; // show it so user can read/share
+    $inputPassphrase.dispatchEvent(new Event('input'));
+    // Auto-revert to password after 10s
+    setTimeout(() => { $inputPassphrase.type = 'password'; }, 10000);
+  });
+
+  // Load saved group name (only if not pre-filled from URL)
+  if (!$inputGroup.value) $inputGroup.value = localStorage.getItem('holler_group') || '';
+
+  $btnConnect.addEventListener('click', handleConnect);
+  $inputPassphrase.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleConnect();
+  });
+
+  async function handleConnect() {
+    const name = $inputName.value.trim();
+    const groupName = $inputGroup.value.trim();
+    const passphrase = $inputPassphrase.value.trim();
+    const wordCount = passphrase.split(/\s+/).filter(w => w.length > 0).length;
+
+    if (!name) { $joinError.textContent = 'Enter your name'; return; }
+    if (!passphrase) { $joinError.textContent = 'Enter a passphrase'; return; }
+    if (wordCount < 4) { $joinError.textContent = 'Passphrase must be at least 4 words'; return; }
+
+    $joinError.textContent = '';
+    $btnConnect.disabled = true;
+    $btnConnect.textContent = 'Connecting...';
+
+    displayName = name;
+    currentGroupName = groupName;
+    currentPassphrase = passphrase;
+    localStorage.setItem('holler_name', name);
+    localStorage.setItem('holler_group', groupName);
+
+    // Salt: group_name:passphrase — then SHA-256 hash
+    const saltedInput = (groupName ? groupName + ':' : '') + passphrase;
+    const fullHash = await sha256hex(saltedInput);
+    roomHash = fullHash.substring(0, 32);
+
+    // Request mic permission early
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (err) {
+      $joinError.textContent = 'Microphone access denied. Please allow mic access.';
+      $btnConnect.disabled = false;
+      $btnConnect.textContent = 'Connect';
+      return;
+    }
+
+    showTalkScreen();
+    connectWS();
+  }
+
+  function showTalkScreen() {
+    $joinScreen.style.display = 'none';
+    $talkScreen.style.display = 'flex';
+  }
+
+  function showJoinScreen() {
+    $talkScreen.style.display = 'none';
+    $joinScreen.style.display = 'flex';
+    $btnConnect.disabled = false;
+    $btnConnect.textContent = 'Connect';
+    $inputPassphrase.value = '';
+    $messages.innerHTML = '';
+    $membersBar.innerHTML = '';
+    seenMessageIds.clear();
+    members = [];
+  }
+
+  // --- WebSocket ---
+  function connectWS() {
+    if (ws) {
+      try { ws.close(); } catch {}
+    }
+
+    setStatus('connecting', 'Connecting...');
+
+    const url = serverUrl + '/ws?room=' + encodeURIComponent(roomHash)
+      + '&id=' + encodeURIComponent(deviceId)
+      + '&name=' + encodeURIComponent(displayName);
+
+    try {
+      ws = new WebSocket(url);
+    } catch (err) {
+      setStatus('disconnected', 'Connection failed');
+      scheduleReconnect();
+      return;
+    }
+
+    ws.onopen = () => {
+      connected = true;
+      reconnectAttempts = 0;
+      setStatus('connected', 'Connected');
+      startPing();
+    };
+
+    ws.onclose = () => {
+      connected = false;
+      setStatus('disconnected', 'Disconnected');
+      stopPing();
+      scheduleReconnect();
+    };
+
+    ws.onerror = () => {
+      // onclose will fire after
+    };
+
+    ws.onmessage = (evt) => {
+      try {
+        const msg = JSON.parse(evt.data);
+        handleWsMessage(msg);
+      } catch {}
+    };
+  }
+
+  function scheduleReconnect() {
+    if (reconnectTimer) return;
+    if (!roomHash) return; // Left the room
+
+    const delay = Math.min(RECONNECT_BASE_MS * Math.pow(1.5, reconnectAttempts), MAX_RECONNECT_MS);
+    reconnectAttempts++;
+    reconnectTimer = setTimeout(() => {
+      reconnectTimer = null;
+      if (!connected && roomHash) connectWS();
+    }, delay);
+  }
+
+  function startPing() {
+    stopPing();
+    pingTimer = setInterval(() => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        wsSend({ type: 'ping', id: uuid(), sender: displayName, sender_id: deviceId, room: roomHash, timestamp: Date.now(), payload: {} });
+      }
+    }, PING_INTERVAL);
+  }
+
+  function stopPing() {
+    if (pingTimer) { clearInterval(pingTimer); pingTimer = null; }
+  }
+
+  function wsSend(obj) {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify(obj));
+    }
+  }
+
+  function disconnect() {
+    roomHash = '';
+    if (reconnectTimer) { clearTimeout(reconnectTimer); reconnectTimer = null; }
+    stopPing();
+    if (ws) { try { ws.close(); } catch {} ws = null; }
+    connected = false;
+    if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+  }
+
+  // --- Status ---
+  function setStatus(state, text) {
+    $statusDot.className = 'status-dot ' + (state === 'connected' ? '' : state === 'connecting' ? 'connecting' : 'disconnected');
+    $statusText.textContent = text;
+  }
+
+  // --- Message handling ---
+  function handleWsMessage(msg) {
+    switch (msg.type) {
+      case 'members':
+        if (msg.payload && msg.payload.members) {
+          members = msg.payload.members;
+          renderMembers();
+          updateMemberCount();
+        }
+        break;
+
+      case 'join':
+        addSystemMessage(msg.sender + ' joined');
+        break;
+
+      case 'leave':
+        addSystemMessage(msg.sender + ' left');
+        break;
+
+      case 'voice':
+        if (msg.sender_id === deviceId) return; // skip own echo
+        if (seenMessageIds.has(msg.id)) return;
+        seenMessageIds.add(msg.id);
+        addVoiceMessage(msg, false);
+        break;
+
+      case 'pong':
+        // keepalive ack
+        break;
+
+      case 'error':
+        if (msg.payload && msg.payload.message) {
+          addSystemMessage('Error: ' + msg.payload.message);
+        }
+        break;
+    }
+  }
+
+  function updateMemberCount() {
+    const onlineCount = members.filter(m => m.online).length;
+    if (connected) {
+      $statusText.textContent = 'Connected' + (onlineCount > 0 ? ' (' + onlineCount + ' online)' : '');
+    }
+  }
+
+  function renderMembers() {
+    $membersBar.innerHTML = '';
+    const onlineMembers = members.filter(m => m.online);
+    onlineMembers.forEach(m => {
+      const pill = document.createElement('div');
+      pill.className = 'member-pill';
+      const isMe = m.id === deviceId;
+      pill.innerHTML = '<span class="member-dot' + (m.online ? '' : ' offline') + '"></span>' +
+        '<span>' + escapeHtml(m.name) + (isMe ? ' (you)' : '') + '</span>';
+      $membersBar.appendChild(pill);
+    });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function addSystemMessage(text) {
+    const el = document.createElement('div');
+    el.className = 'msg-system';
+    el.textContent = text;
+    $messages.appendChild(el);
+    scrollToBottom();
+  }
+
+  function addVoiceMessage(msg, outgoing) {
+    const el = document.createElement('div');
+    el.className = 'msg ' + (outgoing ? 'outgoing' : 'incoming');
+
+    const durationMs = (msg.payload && msg.payload.duration_ms) || 0;
+    const audioData = msg.payload && msg.payload.audio;
+    const msgId = 'play-' + msg.id;
+
+    const transcript = (msg.payload && msg.payload.transcript) || '';
+    const transcriptId = 'tx-' + msg.id;
+
+    el.innerHTML =
+      '<div class="msg-sender">' + escapeHtml(outgoing ? 'You' : msg.sender) + '</div>' +
+      '<div class="msg-row">' +
+        (audioData ? '<button class="btn-play" id="' + msgId + '" title="Play">&#9654;</button>' : '') +
+        '<span class="msg-duration">' + formatDuration(durationMs) + '</span>' +
+        '<span class="msg-time">' + formatTime(msg.timestamp) + '</span>' +
+      '</div>' +
+      '<div class="msg-transcript" id="' + transcriptId + '">' + (transcript ? escapeHtml(transcript) : '') + '</div>';
+
+    $messages.appendChild(el);
+    scrollToBottom();
+
+    if (audioData) {
+      const mime = (msg.payload && msg.payload.mime) || 'audio/webm';
+      const playBtn = document.getElementById(msgId);
+      if (playBtn) {
+        playBtn.addEventListener('click', () => playAudio(audioData, playBtn, false, mime));
+      }
+
+      // Auto-play incoming (if enabled)
+      if (!outgoing && autoPlayEnabled) {
+        queueAutoPlay(audioData, document.getElementById(msgId), mime);
+      }
+    }
+  }
+
+  function scrollToBottom() {
+    requestAnimationFrame(() => {
+      $messages.scrollTop = $messages.scrollHeight;
+    });
+  }
+
+  // --- Audio Playback ---
+  function queueAutoPlay(audioBase64, playBtn, mime) {
+    audioQueue.push({ audio: audioBase64, btn: playBtn, mime: mime });
+    if (!isPlaying) processAudioQueue();
+  }
+
+  function processAudioQueue() {
+    if (audioQueue.length === 0) { isPlaying = false; return; }
+    isPlaying = true;
+    const item = audioQueue.shift();
+    playAudio(item.audio, item.btn, true, item.mime);
+  }
+
+  // Audio context — must be unlocked by user gesture on iOS Safari
+  let audioCtx = null;
+  let audioUnlocked = false;
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      // Resume in case it's suspended (Safari requires this on user gesture)
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      // Play a silent buffer to fully unlock
+      const buf = audioCtx.createBuffer(1, 1, 22050);
+      const src = audioCtx.createBufferSource();
+      src.buffer = buf;
+      src.connect(audioCtx.destination);
+      src.start(0);
+      // Also play a silent Audio element to unlock HTMLAudioElement playback
+      const silentAudio = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
+      silentAudio.volume = 0.01;
+      silentAudio.play().then(() => { silentAudio.pause(); }).catch(() => {});
+      audioUnlocked = true;
+    } catch {}
+  }
+
+  // Use Web Audio API for playback — once AudioContext is resumed via user gesture,
+  // it stays unlocked and can play programmatically (unlike HTMLAudioElement on Safari).
+  let currentSource = null;
+
+  function playAudio(audioBase64, playBtn, fromQueue, mime) {
+    // Stop current
+    if (currentSource) {
+      try { currentSource.stop(); } catch {}
+      currentSource = null;
+    }
+    if (currentAudio) {
+      try { currentAudio.pause(); } catch {}
+      currentAudio = null;
+    }
+    if (currentPlayBtn) currentPlayBtn.classList.remove('playing');
+
+    if (!audioCtx) {
+      // AudioContext not yet created — user hasn't pressed PTT yet
+      if (playBtn) playBtn.innerHTML = '&#9654;';
+      if (fromQueue) processAudioQueue();
+      return;
+    }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    try {
+      const binary = atob(audioBase64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+
+      if (playBtn) playBtn.classList.add('playing');
+      if (playBtn) playBtn.innerHTML = '&#9632;';
+      currentPlayBtn = playBtn;
+
+      // Decode the audio data through AudioContext (works with any format the browser supports)
+      audioCtx.decodeAudioData(bytes.buffer.slice(0), (buffer) => {
+        const source = audioCtx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioCtx.destination);
+        currentSource = source;
+
+        source.onended = () => {
+          if (playBtn) { playBtn.classList.remove('playing'); playBtn.innerHTML = '&#9654;'; }
+          currentSource = null;
+          currentPlayBtn = null;
+          if (fromQueue) processAudioQueue();
+        };
+
+        source.start(0);
+      }, (err) => {
+        // decodeAudioData failed — fall back to Audio element
+        const mimeType = mime || 'audio/mp4';
+        const blob = new Blob([bytes], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        currentAudio = audio;
+
+        audio.onended = () => {
+          URL.revokeObjectURL(url);
+          if (playBtn) { playBtn.classList.remove('playing'); playBtn.innerHTML = '&#9654;'; }
+          currentAudio = null; currentPlayBtn = null;
+          if (fromQueue) processAudioQueue();
+        };
+        audio.onerror = () => {
+          URL.revokeObjectURL(url);
+          if (playBtn) { playBtn.classList.remove('playing'); playBtn.innerHTML = '&#9654;'; }
+          currentAudio = null; currentPlayBtn = null;
+          if (fromQueue) processAudioQueue();
+        };
+        audio.play().catch(() => {
+          if (playBtn) { playBtn.classList.remove('playing'); playBtn.innerHTML = '&#9654;'; }
+          currentAudio = null; currentPlayBtn = null;
+          if (fromQueue) processAudioQueue();
+        });
+      });
+    } catch {
+      if (playBtn) { playBtn.classList.remove('playing'); playBtn.innerHTML = '&#9654;'; }
+      currentPlayBtn = null;
+      if (fromQueue) processAudioQueue();
+    }
+  }
+
+  // --- Push-to-Talk ---
+  let pttTouchId = null;
+  let pttStartX = 0;
+  let pttStartY = 0;
+  const CANCEL_DISTANCE = 80;
+
+  // Mouse events (desktop)
+  $pttBtn.addEventListener('mousedown', (e) => { e.preventDefault(); startRecording(e.clientX, e.clientY); });
+  document.addEventListener('mouseup', () => { if (isRecording) stopRecording(); });
+  document.addEventListener('mousemove', (e) => { if (isRecording) checkCancel(e.clientX, e.clientY); });
+
+  // Touch events (mobile)
+  $pttBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (pttTouchId !== null) return;
+    const touch = e.changedTouches[0];
+    pttTouchId = touch.identifier;
+    startRecording(touch.clientX, touch.clientY);
+  }, { passive: false });
+
+  document.addEventListener('touchmove', (e) => {
+    if (pttTouchId === null) return;
+    for (const touch of e.changedTouches) {
+      if (touch.identifier === pttTouchId) {
+        checkCancel(touch.clientX, touch.clientY);
+        break;
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    if (pttTouchId === null) return;
+    for (const touch of e.changedTouches) {
+      if (touch.identifier === pttTouchId) {
+        pttTouchId = null;
+        stopRecording();
+        break;
+      }
+    }
+  });
+
+  document.addEventListener('touchcancel', (e) => {
+    if (pttTouchId === null) return;
+    pttTouchId = null;
+    isCancelled = true;
+    stopRecording();
+  });
+
+  function startRecording(x, y) {
+    if (!connected) return;
+    if (!micStream) return;
+
+    // Unlock audio playback on first user gesture (required by iOS Safari)
+    unlockAudio();
+
+    pttStartX = x;
+    pttStartY = y;
+    isCancelled = false;
+    isRecording = true;
+    currentTranscript = '';
+    recordedChunks = [];
+    recordingStartTime = Date.now();
+
+    vibrate(30);
+
+    $pttBtn.classList.add('recording');
+    $pttBtn.textContent = '';
+
+    // Update timer
+    updateRecordingTimer();
+    recordingTimer = setInterval(updateRecordingTimer, 100);
+
+    try {
+      // Prefer mp4 — it's the only format both Safari AND Chrome can record AND play.
+      // Safari can't play webm. Chrome can play mp4.
+      let mimeType = '';
+      for (const candidate of ['audio/mp4', 'audio/mp4;codecs=opus', 'audio/aac', 'audio/webm;codecs=opus', 'audio/webm', '']) {
+        if (candidate === '' || MediaRecorder.isTypeSupported(candidate)) {
+          mimeType = candidate;
+          break;
+        }
+      }
+
+      const options = mimeType ? { mimeType } : {};
+      mediaRecorder = new MediaRecorder(micStream, options);
+      const actualMime = mediaRecorder.mimeType || mimeType || 'audio/webm';
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        if (!isCancelled && recordedChunks.length > 0) {
+          sendVoice(actualMime);
+        } else if (!isCancelled) {
+          addSystemMessage('Recording produced no audio data');
+        }
+      };
+
+      // Safari doesn't support timeslice — use start() without argument
+      mediaRecorder.start();
+
+      // Start speech recognition in parallel for transcription
+      startTranscription();
+    } catch (err) {
+      isRecording = false;
+      $pttBtn.classList.remove('recording');
+      $pttBtn.textContent = 'TALK';
+      clearInterval(recordingTimer);
+      addSystemMessage('Recording failed: ' + err.message);
+    }
+  }
+
+  function updateRecordingTimer() {
+    const elapsed = Date.now() - recordingStartTime;
+    $pttStatus.innerHTML = '<span class="rec-dot"></span> Recording ' + formatDuration(elapsed);
+  }
+
+  function checkCancel(x, y) {
+    const dx = x - pttStartX;
+    const dy = y - pttStartY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist > CANCEL_DISTANCE) {
+      if (!isCancelled) {
+        isCancelled = true;
+        $pttBtn.classList.remove('recording');
+        $pttBtn.classList.add('cancel');
+        $pttStatus.textContent = 'Release to cancel';
+        vibrate(20);
+      }
+    } else {
+      if (isCancelled) {
+        isCancelled = false;
+        $pttBtn.classList.remove('cancel');
+        $pttBtn.classList.add('recording');
+        updateRecordingTimer();
+      }
+    }
+  }
+
+  function stopRecording() {
+    if (!isRecording) return;
+    isRecording = false;
+
+    clearInterval(recordingTimer);
+    stopTranscription();
+
+    if (isCancelled) {
+      $pttBtn.classList.remove('recording', 'cancel');
+      $pttBtn.textContent = 'TALK';
+      $pttStatus.textContent = 'Cancelled';
+      setTimeout(() => { if (!isRecording) $pttStatus.textContent = ''; }, 1500);
+      vibrate(15);
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        try { mediaRecorder.stop(); } catch {}
+      }
+      recordedChunks = [];
+      return;
+    }
+
+    const durationMs = Date.now() - recordingStartTime;
+
+    // Too short
+    if (durationMs < 300) {
+      $pttBtn.classList.remove('recording');
+      $pttBtn.textContent = 'TALK';
+      $pttStatus.textContent = 'Too short';
+      setTimeout(() => { if (!isRecording) $pttStatus.textContent = ''; }, 1500);
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        isCancelled = true; // prevent send
+        try { mediaRecorder.stop(); } catch {}
+      }
+      return;
+    }
+
+    // Flash green
+    $pttBtn.classList.remove('recording');
+    $pttBtn.classList.add('sent');
+    $pttBtn.textContent = 'SENT';
+    vibrate([15, 50, 15]);
+
+    setTimeout(() => {
+      $pttBtn.classList.remove('sent');
+      $pttBtn.textContent = 'TALK';
+    }, 400);
+
+    $pttStatus.textContent = '';
+
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      try { mediaRecorder.stop(); } catch {}
+    }
+  }
+
+  function sendVoice(mime) {
+    const durationMs = Date.now() - recordingStartTime;
+    const blobType = mime || recordedChunks[0]?.type || 'audio/mp4';
+    const blob = new Blob(recordedChunks, { type: blobType });
+
+    if (blob.size < 100) {
+      addSystemMessage('Recording too small (' + blob.size + ' bytes) — not sent');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result.split(',')[1];
+      if (!base64 || base64.length < 50) {
+        addSystemMessage('Audio encoding failed — not sent');
+        return;
+      }
+
+      const msgId = uuid();
+      const msg = {
+        type: 'voice',
+        id: msgId,
+        sender: displayName,
+        sender_id: deviceId,
+        room: roomHash,
+        timestamp: Date.now(),
+        payload: {
+          audio: base64,
+          duration_ms: durationMs,
+          mime: blobType,
+          transcript: currentTranscript || ''
+        }
+      };
+
+      wsSend(msg);
+
+      // Add to own feed (without audio to save memory -- we already heard ourselves)
+      seenMessageIds.add(msgId);
+      addVoiceMessage(msg, true);
+    };
+
+    reader.readAsDataURL(blob);
+  }
+
+  // --- Auto-play toggle ---
+  $btnAutoplay.addEventListener('click', () => {
+    autoPlayEnabled = !autoPlayEnabled;
+    $btnAutoplay.classList.toggle('active', autoPlayEnabled);
+    $btnAutoplay.textContent = autoPlayEnabled ? 'AUTO' : 'MANUAL';
+  });
+
+  // --- Share/Invite ---
+  $btnShare.addEventListener('click', async () => {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const params = new URLSearchParams();
+    if (currentGroupName) params.set('g', currentGroupName);
+    if (currentPassphrase) params.set('p', currentPassphrase);
+    const inviteUrl = baseUrl + '?' + params.toString();
+
+    // Use native share sheet if available (mobile), otherwise copy to clipboard
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Join me on Holler',
+          text: 'Tap to join our walkie-talkie room',
+          url: inviteUrl,
+        });
+      } catch {} // user cancelled
+    } else {
+      try {
+        await navigator.clipboard.writeText(inviteUrl);
+        $btnShare.textContent = 'COPIED';
+        setTimeout(() => { $btnShare.textContent = 'INVITE'; }, 2000);
+      } catch {
+        // Fallback: show the URL
+        prompt('Share this link:', inviteUrl);
+      }
+    }
+  });
+
+  // --- Settings ---
+  $btnSettings.addEventListener('click', () => {
+    $settingsName.value = displayName;
+    $settingsServer.value = serverUrl;
+    $settingsModal.classList.add('open');
+  });
+
+  $settingsModal.addEventListener('click', (e) => {
+    if (e.target === $settingsModal) $settingsModal.classList.remove('open');
+  });
+
+  $btnSave.addEventListener('click', () => {
+    const newName = $settingsName.value.trim();
+    const newServer = $settingsServer.value.trim();
+
+    if (newName && newName !== displayName) {
+      displayName = newName;
+      localStorage.setItem('holler_name', displayName);
+    }
+
+    if (newServer && newServer !== serverUrl) {
+      serverUrl = newServer;
+      localStorage.setItem('holler_server', serverUrl);
+      // Reconnect with new server
+      disconnect();
+      roomHash = roomHash; // keep room
+      connectWS();
+    }
+
+    $settingsModal.classList.remove('open');
+  });
+
+  $btnLeave.addEventListener('click', () => {
+    $settingsModal.classList.remove('open');
+    disconnect();
+    showJoinScreen();
+  });
+
+  // --- Prevent context menu on long press ---
+  $pttBtn.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  // --- Prune seen message IDs periodically ---
+  setInterval(() => {
+    if (seenMessageIds.size > 500) {
+      const arr = Array.from(seenMessageIds);
+      seenMessageIds = new Set(arr.slice(arr.length - 200));
+    }
+  }, 60000);
+
+})();
+</script>
+</body>
+</html>

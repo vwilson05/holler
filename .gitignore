@@ -1,0 +1,9 @@
+node_modules/
+.build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.DS_Store
+*.ipa
+server/node_modules/
+server/bun.lock

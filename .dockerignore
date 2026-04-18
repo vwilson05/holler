@@ -1,0 +1,8 @@
+WalkieTalkie/
+WalkieTalkie.xcodeproj/
+HollerWatch/
+HollerWatchWidgets/
+HollerWidget/
+server/node_modules/
+.git/
+*.xcodeproj

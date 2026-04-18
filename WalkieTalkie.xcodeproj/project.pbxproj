@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A6010001 /* WalkieTalkieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020001 /* WalkieTalkieApp.swift */; };
+		A6010002 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020002 /* Models.swift */; };
+		A6010003 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020003 /* Channel.swift */; };
+		A6010004 /* VoiceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020004 /* VoiceMessage.swift */; };
+		A6010005 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020005 /* Member.swift */; };
+		A6010006 /* WireMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020006 /* WireMessage.swift */; };
+		A6010007 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020007 /* AudioManager.swift */; };
+		A6010008 /* MultipeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020008 /* MultipeerManager.swift */; };
+		A6010009 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020009 /* WebSocketManager.swift */; };
+		A601000A /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000A /* ConnectionManager.swift */; };
+		A601000B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000B /* LocationManager.swift */; };
+		A601000C /* TranscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000C /* TranscriptionManager.swift */; };
+		A601000D /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000D /* HapticManager.swift */; };
+		A601000E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000E /* MainView.swift */; };
+		A601000F /* TalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000F /* TalkView.swift */; };
+		A6010010 /* ChannelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020010 /* ChannelListView.swift */; };
+		A6010011 /* ChannelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020011 /* ChannelDetailView.swift */; };
+		A6010012 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020012 /* MapView.swift */; };
+		A6010013 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020013 /* SettingsView.swift */; };
+		A6010014 /* PTTButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020014 /* PTTButton.swift */; };
+		A6010015 /* VoiceBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020015 /* VoiceBubble.swift */; };
+		A6010016 /* MemberRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020016 /* MemberRow.swift */; };
+		A6010017 /* ChannelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020017 /* ChannelCard.swift */; };
+		A6010018 /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020018 /* Color+Theme.swift */; };
+		A6010019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6020019 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A6030001 /* Holler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Holler.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6020001 /* WalkieTalkieApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkieTalkieApp.swift; sourceTree = "<group>"; };
+		A6020002 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		A6020003 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		A6020004 /* VoiceMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessage.swift; sourceTree = "<group>"; };
+		A6020005 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		A6020006 /* WireMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireMessage.swift; sourceTree = "<group>"; };
+		A6020007 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		A6020008 /* MultipeerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerManager.swift; sourceTree = "<group>"; };
+		A6020009 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
+		A602000A /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		A602000B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		A602000C /* TranscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionManager.swift; sourceTree = "<group>"; };
+		A602000D /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		A602000E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		A602000F /* TalkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkView.swift; sourceTree = "<group>"; };
+		A6020010 /* ChannelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListView.swift; sourceTree = "<group>"; };
+		A6020011 /* ChannelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetailView.swift; sourceTree = "<group>"; };
+		A6020012 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		A6020013 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A6020014 /* PTTButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTButton.swift; sourceTree = "<group>"; };
+		A6020015 /* VoiceBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceBubble.swift; sourceTree = "<group>"; };
+		A6020016 /* MemberRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRow.swift; sourceTree = "<group>"; };
+		A6020017 /* ChannelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCard.swift; sourceTree = "<group>"; };
+		A6020018 /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
+		A6020019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A602001A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A602001B /* WalkieTalkie.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WalkieTalkie.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A6040001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A6050001 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				A6050002 /* WalkieTalkie */,
+				A6050003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A6050002 /* WalkieTalkie */ = {
+			isa = PBXGroup;
+			children = (
+				A6020001 /* WalkieTalkieApp.swift */,
+				A6050004 /* Models */,
+				A6050005 /* Managers */,
+				A6050006 /* Views */,
+				A6050008 /* Extensions */,
+				A6020019 /* Assets.xcassets */,
+				A602001A /* Info.plist */,
+				A602001B /* WalkieTalkie.entitlements */,
+			);
+			path = WalkieTalkie;
+			sourceTree = "<group>";
+		};
+		A6050003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A6030001 /* Holler.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A6050004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A6020002 /* Models.swift */,
+				A6020003 /* Channel.swift */,
+				A6020004 /* VoiceMessage.swift */,
+				A6020005 /* Member.swift */,
+				A6020006 /* WireMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A6050005 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A6020007 /* AudioManager.swift */,
+				A6020008 /* MultipeerManager.swift */,
+				A6020009 /* WebSocketManager.swift */,
+				A602000A /* ConnectionManager.swift */,
+				A602000B /* LocationManager.swift */,
+				A602000C /* TranscriptionManager.swift */,
+				A602000D /* HapticManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		A6050006 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A602000E /* MainView.swift */,
+				A602000F /* TalkView.swift */,
+				A6020010 /* ChannelListView.swift */,
+				A6020011 /* ChannelDetailView.swift */,
+				A6020012 /* MapView.swift */,
+				A6020013 /* SettingsView.swift */,
+				A6050007 /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A6050007 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A6020014 /* PTTButton.swift */,
+				A6020015 /* VoiceBubble.swift */,
+				A6020016 /* MemberRow.swift */,
+				A6020017 /* ChannelCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		A6050008 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A6020018 /* Color+Theme.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A60000 /* WalkieTalkie */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6070001 /* Build configuration list for PBXNativeTarget "WalkieTalkie" */;
+			buildPhases = (
+				A6060001 /* Sources */,
+				A6040001 /* Frameworks */,
+				A6060002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WalkieTalkie;
+			productName = WalkieTalkie;
+			productReference = A6030001 /* Holler.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A6080001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					A60000 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = A6070002 /* Build configuration list for PBXProject "WalkieTalkie" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A6050001 /* Root */;
+			productRefGroup = A6050003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A60000 /* WalkieTalkie */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A6060002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6010019 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A6060001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6010001 /* WalkieTalkieApp.swift in Sources */,
+				A6010002 /* Models.swift in Sources */,
+				A6010003 /* Channel.swift in Sources */,
+				A6010004 /* VoiceMessage.swift in Sources */,
+				A6010005 /* Member.swift in Sources */,
+				A6010006 /* WireMessage.swift in Sources */,
+				A6010007 /* AudioManager.swift in Sources */,
+				A6010008 /* MultipeerManager.swift in Sources */,
+				A6010009 /* WebSocketManager.swift in Sources */,
+				A601000A /* ConnectionManager.swift in Sources */,
+				A601000B /* LocationManager.swift in Sources */,
+				A601000C /* TranscriptionManager.swift in Sources */,
+				A601000D /* HapticManager.swift in Sources */,
+				A601000E /* MainView.swift in Sources */,
+				A601000F /* TalkView.swift in Sources */,
+				A6010010 /* ChannelListView.swift in Sources */,
+				A6010011 /* ChannelDetailView.swift in Sources */,
+				A6010012 /* MapView.swift in Sources */,
+				A6010013 /* SettingsView.swift in Sources */,
+				A6010014 /* PTTButton.swift in Sources */,
+				A6010015 /* VoiceBubble.swift in Sources */,
+				A6010016 /* MemberRow.swift in Sources */,
+				A6010017 /* ChannelCard.swift in Sources */,
+				A6010018 /* Color+Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A6090001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A6090002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A6090003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6SULXSSZL7;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = WalkieTalkie/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.holler;
+				PRODUCT_NAME = Holler;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A6090004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6SULXSSZL7;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = WalkieTalkie/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.holler;
+				PRODUCT_NAME = Holler;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A6070002 /* Build configuration list for PBXProject "WalkieTalkie" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6090001 /* Debug */,
+				A6090002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6070001 /* Build configuration list for PBXNativeTarget "WalkieTalkie" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6090003 /* Debug */,
+				A6090004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A6080001 /* Project object */;
+}
