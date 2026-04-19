@@ -34,6 +34,14 @@ struct ChannelDetailView: View {
                                 .foregroundStyle(Color.hollerTextSecondary)
                         }
 
+                        // Room code preview for verification
+                        Text("Room: \(String(channel.code.prefix(6)))")
+                            .font(.caption.monospaced())
+                            .foregroundStyle(Color.hollerTextSecondary.opacity(0.6))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 3)
+                            .background(Capsule().fill(Color.hollerCard))
+
                         Text(channel.mode.displayName)
                             .font(.caption)
                             .padding(.horizontal, 12)
@@ -174,7 +182,7 @@ struct ChannelDetailView: View {
     private func shareInvite() {
         let groupEncoded = channel.groupName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let passEncoded = channel.passphrase.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let url = "https://holler-relay-production.up.railway.app/?g=\(groupEncoded)&p=\(passEncoded)"
+        let url = "https://holleratme.app/join?g=\(groupEncoded)&p=\(passEncoded)"
         let text = "Join my Holler channel \"\(channel.name)\"!\n\(url)"
         let av = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

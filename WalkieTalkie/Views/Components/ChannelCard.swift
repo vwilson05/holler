@@ -67,9 +67,9 @@ struct ChannelCard: View {
 
                 Spacer()
 
-                // Channel code
+                // Room code preview (first 6 chars for verification)
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text(channel.code)
+                    Text(String(channel.code.prefix(6)))
                         .font(.caption2.monospaced())
                         .foregroundStyle(Color.hollerTextSecondary.opacity(0.5))
 

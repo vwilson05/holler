@@ -100,7 +100,7 @@ struct ChannelListView: View {
     private func shareChannel(_ channel: Channel) {
         let groupEncoded = channel.groupName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let passEncoded = channel.passphrase.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let url = "https://holler-relay-production.up.railway.app/?g=\(groupEncoded)&p=\(passEncoded)"
+        let url = "https://holleratme.app/join?g=\(groupEncoded)&p=\(passEncoded)"
         let text = "Join my Holler channel \"\(channel.name)\"!\n\(url)"
         let av = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -372,6 +372,20 @@ struct JoinChannelSheet: View {
                 Color.hollerBackground.ignoresSafeArea()
 
                 VStack(spacing: 24) {
+                    // Match warning
+                    HStack(spacing: 8) {
+                        Image(systemName: "info.circle.fill")
+                            .foregroundStyle(Color.hollerAccent)
+                        Text("Both the group name AND passphrase must match exactly to connect with others.")
+                            .font(.caption)
+                            .foregroundStyle(Color.hollerTextSecondary)
+                    }
+                    .padding(12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.hollerAccent.opacity(0.1))
+                    )
+
                     // Group name
                     VStack(alignment: .leading, spacing: 8) {
                         Text("GROUP NAME")

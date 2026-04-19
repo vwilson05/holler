@@ -36,6 +36,17 @@
 	<array>
 		<string>_hlr._tcp</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.wilson.holler</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>holler</string>
+			</array>
+		</dict>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

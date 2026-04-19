@@ -746,7 +746,11 @@ html, body {
   const CHECK_SVG = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
 
   // --- Configuration ---
-  const DEFAULT_SERVER = (location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host;
+  // Use the relay server directly — the web client may be proxied from a different domain (e.g. holleratme.app/web)
+  const RELAY_HOST = 'holler-relay-production.up.railway.app';
+  const DEFAULT_SERVER = location.host === RELAY_HOST
+    ? (location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host
+    : 'wss://' + RELAY_HOST;
   const PING_INTERVAL = 25000;
   const RECONNECT_BASE_MS = 3000;
   const MAX_RECONNECT_MS = 30000;
@@ -1345,16 +1349,40 @@ html, body {
       if (touch.identifier === pttTouchId) {
         pttTouchId = null;
         stopRecording();
-        break;
+        return;
       }
+    }
+    // Safety: if no matching touch found but we're recording, stop anyway
+    // Safari sometimes fires touchend with a different identifier
+    if (isRecording) {
+      pttTouchId = null;
+      stopRecording();
     }
   });
 
   document.addEventListener('touchcancel', (e) => {
-    if (pttTouchId === null) return;
-    pttTouchId = null;
-    isCancelled = true;
-    stopRecording();
+    // Always stop on cancel, regardless of touch identifier
+    if (isRecording || pttTouchId !== null) {
+      pttTouchId = null;
+      isCancelled = true;
+      stopRecording();
+    }
+  });
+
+  // Safety: if finger leaves the screen entirely, stop recording
+  // Safari can miss touchend when scrolling or gesture conflicts occur
+  document.addEventListener('pointerup', () => {
+    if (isRecording) {
+      pttTouchId = null;
+      stopRecording();
+    }
+  });
+  document.addEventListener('pointercancel', () => {
+    if (isRecording) {
+      pttTouchId = null;
+      isCancelled = true;
+      stopRecording();
+    }
   });
 
   function startRecording(x, y) {
@@ -1380,6 +1408,14 @@ html, body {
 
     // Update timer
     updateRecordingTimer();
+
+    // Safety: auto-stop after 60 seconds max
+    setTimeout(() => {
+      if (isRecording) {
+        pttTouchId = null;
+        stopRecording();
+      }
+    }, 60000);
     recordingTimer = setInterval(updateRecordingTimer, 100);
 
     try {

@@ -7,6 +7,8 @@ struct TalkView: View {
     @EnvironmentObject var audio: AudioManager
 
     @State private var searchText = ""
+    @State private var showAloneWarning = false
+    @State private var aloneCheckTask: Task<Void, Never>?
 
     var channelColor: Color {
         Color(hex: settings.activeChannel?.colorHex ?? "#FF6B47")
@@ -33,6 +35,26 @@ struct TalkView: View {
                     statusBar
                         .padding(.horizontal, 20)
                         .padding(.top, 8)
+
+                    // Alone in room warning
+                    if showAloneWarning {
+                        HStack(spacing: 8) {
+                            Image(systemName: "person.slash.fill")
+                                .font(.caption)
+                                .foregroundStyle(Color.hollerTextSecondary)
+                            Text("No one else is here yet. Make sure your group name and passphrase match exactly.")
+                                .font(.caption)
+                                .foregroundStyle(Color.hollerTextSecondary)
+                        }
+                        .padding(10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.hollerCard)
+                        )
+                        .padding(.horizontal, 16)
+                        .padding(.top, 6)
+                        .transition(.opacity)
+                    }
 
                     // Playback indicator (top, visible banner)
                     if audio.isPlaying, let sender = audio.playbackSender {
@@ -66,6 +88,13 @@ struct TalkView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear { startAloneCheck() }
+            .onChange(of: settings.activeChannelID) { _, _ in startAloneCheck() }
+            .onChange(of: connection.activeChannelMembers.count) { _, newCount in
+                if newCount > 1 {
+                    withAnimation { showAloneWarning = false }
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 2) {
@@ -74,6 +103,21 @@ struct TalkView: View {
                             .foregroundStyle(Color.hollerTextPrimary)
                     }
                 }
+            }
+        }
+    }
+
+    // MARK: - Alone Check
+
+    private func startAloneCheck() {
+        aloneCheckTask?.cancel()
+        showAloneWarning = false
+        aloneCheckTask = Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
+            guard !Task.isCancelled else { return }
+            let otherMembers = connection.activeChannelMembers.filter { $0.id != settings.deviceID }
+            if otherMembers.isEmpty {
+                withAnimation { showAloneWarning = true }
             }
         }
     }
@@ -128,7 +172,7 @@ struct TalkView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "lock.fill")
                         .font(.caption2)
-                    Text(channel.code)
+                    Text(String(channel.code.prefix(6)))
                         .font(.caption.monospaced())
                 }
                 .foregroundStyle(Color.hollerTextSecondary.opacity(0.6))

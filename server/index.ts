@@ -29,6 +29,29 @@ const app = new Hono();
 
 app.use("*", cors());
 
+// Serve Apple App Site Association for Universal Links
+app.get("/.well-known/apple-app-site-association", async (c) => {
+  const aasaPath = new URL("./public/.well-known/apple-app-site-association", import.meta.url).pathname;
+  const file = Bun.file(aasaPath);
+  if (await file.exists()) {
+    return c.json(JSON.parse(await file.text()));
+  }
+  return c.json({ error: "AASA not found" }, 404);
+});
+
+// /join redirect — if user hits this without the iOS app, redirect to web client on relay
+app.get("/join", (c) => {
+  const g = c.req.query("g") || "";
+  const p = c.req.query("p") || "";
+  const host = c.req.header("host") || "";
+  const isRelay = host.includes("holler-relay-production");
+  // If on relay server, redirect to root (web client). If on landing page domain, redirect to relay.
+  const relayURL = isRelay
+    ? `/?g=${encodeURIComponent(g)}&p=${encodeURIComponent(p)}`
+    : `https://holler-relay-production.up.railway.app/?g=${encodeURIComponent(g)}&p=${encodeURIComponent(p)}`;
+  return c.redirect(relayURL);
+});
+
 app.get("/", async (c) => {
   // Serve the web client
   const webPath = new URL("../web/index.html", import.meta.url).pathname;

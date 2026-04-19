@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "6SULXSSZL7.com.wilson.holler",
+        "paths": [
+          "/join",
+          "/join/*",
+          "/*"
+        ]
+      }
+    ]
+  }
+}
