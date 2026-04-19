@@ -207,7 +207,7 @@ struct SettingsView: View {
                                     Text("Version")
                                         .foregroundStyle(Color.hollerTextSecondary)
                                     Spacer()
-                                    Text("1.0.0")
+                                    Text("\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"))")
                                         .foregroundStyle(.white)
                                 }
                                 .font(.subheadline)
