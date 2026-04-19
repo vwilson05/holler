@@ -34,6 +34,13 @@ struct TalkView: View {
                         .padding(.horizontal, 20)
                         .padding(.top, 8)
 
+                    // Playback indicator (top, visible banner)
+                    if audio.isPlaying, let sender = audio.playbackSender {
+                        playbackIndicator(sender: sender)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 6)
+                    }
+
                     // Search bar
                     if !connection.activeChannelMessages.isEmpty {
                         searchBar
@@ -46,11 +53,6 @@ struct TalkView: View {
                         .padding(.top, 8)
 
                     Spacer()
-
-                    // Playback indicator
-                    if audio.isPlaying, let sender = audio.playbackSender {
-                        playbackIndicator(sender: sender)
-                    }
 
                     // PTT Button
                     PTTButton(channelColor: channelColor)
@@ -184,14 +186,15 @@ struct TalkView: View {
     // MARK: - Playback
 
     private func playbackIndicator(sender: String) -> some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 10) {
             Image(systemName: "waveform")
+                .font(.subheadline)
                 .symbolEffect(.variableColor)
                 .foregroundStyle(channelColor)
 
-            Text("Playing from \(sender)")
-                .font(.subheadline)
-                .foregroundStyle(Color.hollerTextSecondary)
+            Text("Listening to \(sender)")
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(.white)
 
             Spacer()
 
@@ -199,12 +202,16 @@ struct TalkView: View {
                 audio.stopPlayback()
             } label: {
                 Image(systemName: "xmark.circle.fill")
+                    .font(.body)
                     .foregroundStyle(Color.hollerTextSecondary)
             }
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 8)
-        .background(Color.hollerCard)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.hollerCardElevated)
+        )
     }
 }
 

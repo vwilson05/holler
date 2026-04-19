@@ -51,6 +51,10 @@ final class AppSettings: ObservableObject {
         didSet { defaults.set(audioQuality.rawValue, forKey: "audioQuality") }
     }
 
+    @Published var stayActiveInBackground: Bool {
+        didSet { defaults.set(stayActiveInBackground, forKey: "stayActiveInBackground") }
+    }
+
     @Published var prefersDarkMode: Bool {
         didSet { defaults.set(prefersDarkMode, forKey: "prefersDarkMode") }
     }
@@ -86,6 +90,7 @@ final class AppSettings: ObservableObject {
         self.notificationBanner = defaults.object(forKey: "notificationBanner") as? Bool ?? true
         self.audioQuality = AudioQuality(rawValue: defaults.string(forKey: "audioQuality") ?? "") ?? .medium
         self.prefersDarkMode = defaults.object(forKey: "prefersDarkMode") as? Bool ?? true
+        self.stayActiveInBackground = defaults.object(forKey: "stayActiveInBackground") as? Bool ?? true
 
         // Load channels
         if let data = defaults.data(forKey: "channels"),

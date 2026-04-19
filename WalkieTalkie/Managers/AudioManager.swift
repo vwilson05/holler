@@ -184,8 +184,12 @@ final class AudioManager: NSObject, ObservableObject {
 
     @objc private func appDidEnterBackground() {
         isInBackground = true
-        startSilentLoop()
-        print("[Audio] Background: started silent audio loop")
+        if settings.stayActiveInBackground {
+            startSilentLoop()
+            print("[Audio] Background: stay-active ON — started silent audio loop")
+        } else {
+            print("[Audio] Background: stay-active OFF — relying on notifications")
+        }
     }
 
     @objc private func appWillEnterForeground() {

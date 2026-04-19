@@ -55,11 +55,13 @@ final class ConnectionManager: ObservableObject {
         guard settings.isSetUp else { return }
         guard let channel = settings.activeChannel else { return }
 
-        // Start Multipeer (LAN)
-        multipeer.start(displayName: settings.displayName, roomCode: channel.code)
+        // Start Multipeer (LAN) unless relay-only
+        if channel.connectionMode != .relay {
+            multipeer.start(displayName: settings.displayName, roomCode: channel.code)
+        }
 
-        // Start WebSocket (Internet) if relay URL is configured
-        if !settings.relayServerURL.isEmpty {
+        // Start WebSocket (Internet) unless LAN-only
+        if channel.connectionMode != .lan && !settings.relayServerURL.isEmpty {
             ws.connect(
                 url: settings.relayServerURL,
                 room: channel.code,
@@ -124,9 +126,11 @@ final class ConnectionManager: ObservableObject {
             payload: .voice(WirePayload.VoicePayload(audio: base64Audio, durationMs: durationMs))
         )
 
-        // Send via both channels
-        multipeer.send(wireMsg)
-        if !settings.relayServerURL.isEmpty {
+        // Send via channels based on connection mode
+        if channel.connectionMode != .relay {
+            multipeer.send(wireMsg)
+        }
+        if channel.connectionMode != .lan && !settings.relayServerURL.isEmpty {
             ws.send(wireMsg)
         }
 
@@ -154,8 +158,10 @@ final class ConnectionManager: ObservableObject {
                 room: channel.code,
                 payload: .transcription(WirePayload.TranscriptionPayload(messageID: messageID.uuidString, text: text))
             )
-            self?.multipeer.send(transMsg)
-            if !(self?.settings.relayServerURL.isEmpty ?? true) {
+            if channel.connectionMode != .relay {
+                self?.multipeer.send(transMsg)
+            }
+            if channel.connectionMode != .lan && !(self?.settings.relayServerURL.isEmpty ?? true) {
                 self?.ws.send(transMsg)
             }
         }
@@ -176,8 +182,10 @@ final class ConnectionManager: ObservableObject {
             payload: .location(WirePayload.LocationPayload(lat: lat, lng: lng, accuracy: accuracy))
         )
 
-        multipeer.send(wireMsg)
-        if !settings.relayServerURL.isEmpty {
+        if channel.connectionMode != .relay {
+            multipeer.send(wireMsg)
+        }
+        if channel.connectionMode != .lan && !settings.relayServerURL.isEmpty {
             ws.send(wireMsg)
         }
 
@@ -354,6 +362,7 @@ final class ConnectionManager: ObservableObject {
             guard let self, self.isActive else { return }
             if !self.ws.isConnected && !self.settings.relayServerURL.isEmpty {
                 guard let channel = self.settings.activeChannel else { return }
+                guard channel.connectionMode != .lan else { return }
                 print("[Connection] Background reconnect attempt")
                 self.ws.connect(
                     url: self.settings.relayServerURL,
@@ -379,6 +388,7 @@ final class ConnectionManager: ObservableObject {
         // Reconnect if needed
         if isActive && !ws.isConnected && !settings.relayServerURL.isEmpty {
             guard let channel = settings.activeChannel else { return }
+            guard channel.connectionMode != .lan else { return }
             ws.connect(
                 url: settings.relayServerURL,
                 room: channel.code,

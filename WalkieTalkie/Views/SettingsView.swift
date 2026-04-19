@@ -98,6 +98,10 @@ struct SettingsView: View {
                                 Text("Leave empty for LAN-only mode. Deploy the included server for internet relay.")
                                     .font(.caption)
                                     .foregroundStyle(Color.hollerTextSecondary)
+
+                                Text("Connection mode (LAN / Relay / Auto) is set per channel in channel settings.")
+                                    .font(.caption)
+                                    .foregroundStyle(Color.hollerTextSecondary)
                             }
                         }
 
@@ -111,6 +115,22 @@ struct SettingsView: View {
                                 settingsToggle(icon: "bell.fill", title: "Banner", isOn: $settings.notificationBanner)
                             }
                             .hollerCard()
+                        }
+
+                        // Background Behavior
+                        settingsSection(title: "Background") {
+                            VStack(spacing: 0) {
+                                settingsToggle(icon: "bolt.fill", title: "Stay active in background", isOn: $settings.stayActiveInBackground)
+                            }
+                            .hollerCard()
+
+                            Text(settings.stayActiveInBackground
+                                ? "Messages auto-play even when the app is minimized. Uses slightly more battery."
+                                : "Messages arrive as notifications when the app is minimized. Better battery life.")
+                                .font(.caption)
+                                .foregroundStyle(Color.hollerTextSecondary)
+                                .padding(.horizontal, 4)
+                                .padding(.top, 6)
                         }
 
                         // Audio Quality

@@ -1,6 +1,30 @@
 import Foundation
 import CryptoKit
 
+enum ConnectionMode: String, Codable, CaseIterable, Identifiable {
+    case lan       // Multipeer only — voice stays on local network
+    case relay     // WebSocket only — works across networks
+    case auto      // Try both (Multipeer + relay)
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .lan: return "Same WiFi"
+        case .relay: return "Anywhere"
+        case .auto: return "Auto"
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .lan: return "Private. Voice never leaves your network."
+        case .relay: return "Works across any network via relay server."
+        case .auto: return "Uses local WiFi when available, relay as fallback."
+        }
+    }
+}
+
 enum ChannelMode: String, Codable, CaseIterable, Identifiable {
     case home, roadtrip, event, hangout, custom
 
@@ -48,6 +72,7 @@ struct Channel: Identifiable, Codable, Equatable, Hashable {
     var createdAt: Date
     var locationSharingEnabled: Bool
     var locationSharingExpiry: Date?
+    var connectionMode: ConnectionMode
 
     init(
         id: UUID = UUID(),
@@ -59,7 +84,8 @@ struct Channel: Identifiable, Codable, Equatable, Hashable {
         colorHex: String = "#00C9A7",
         createdAt: Date = Date(),
         locationSharingEnabled: Bool = false,
-        locationSharingExpiry: Date? = nil
+        locationSharingExpiry: Date? = nil,
+        connectionMode: ConnectionMode = .auto
     ) {
         self.id = id
         self.name = name
@@ -71,6 +97,28 @@ struct Channel: Identifiable, Codable, Equatable, Hashable {
         self.createdAt = createdAt
         self.locationSharingEnabled = locationSharingEnabled
         self.locationSharingExpiry = locationSharingExpiry
+        self.connectionMode = connectionMode
+    }
+
+    // Custom Codable to default connectionMode for channels saved before this field existed
+    enum CodingKeys: String, CodingKey {
+        case id, name, code, groupName, passphrase, mode, colorHex, createdAt
+        case locationSharingEnabled, locationSharingExpiry, connectionMode
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        code = try container.decode(String.self, forKey: .code)
+        groupName = try container.decode(String.self, forKey: .groupName)
+        passphrase = try container.decode(String.self, forKey: .passphrase)
+        mode = try container.decode(ChannelMode.self, forKey: .mode)
+        colorHex = try container.decode(String.self, forKey: .colorHex)
+        createdAt = try container.decode(Date.self, forKey: .createdAt)
+        locationSharingEnabled = try container.decode(Bool.self, forKey: .locationSharingEnabled)
+        locationSharingExpiry = try container.decodeIfPresent(Date.self, forKey: .locationSharingExpiry)
+        connectionMode = try container.decodeIfPresent(ConnectionMode.self, forKey: .connectionMode) ?? .auto
     }
 
     /// Compute a deterministic room code from group name + passphrase using SHA-256

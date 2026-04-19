@@ -122,6 +122,7 @@ struct CreateChannelSheet: View {
     @State private var passphraseInput = ""
     @State private var isPassphraseVisible = false
     @State private var selectedMode: ChannelMode = .hangout
+    @State private var selectedConnectionMode: ConnectionMode = .auto
     @State private var colorHex = "#FF6B47"
 
     private let colorOptions = ["#FF6B47", "#4ECDC4", "#FFE66D", "#A78BFA", "#60A5FA", "#F472B6", "#34D399"]
@@ -279,6 +280,25 @@ struct CreateChannelSheet: View {
                             }
                         }
 
+                        // Connection Mode
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("CONNECTION")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(Color.hollerTextSecondary)
+                                .tracking(1)
+
+                            Picker("Connection", selection: $selectedConnectionMode) {
+                                ForEach(ConnectionMode.allCases) { mode in
+                                    Text(mode.displayName).tag(mode)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+
+                            Text(selectedConnectionMode.description)
+                                .font(.caption)
+                                .foregroundStyle(Color.hollerTextSecondary)
+                        }
+
                         // Create button
                         Button {
                             let trimmedGroup = groupNameInput.trimmingCharacters(in: .whitespaces)
@@ -291,7 +311,8 @@ struct CreateChannelSheet: View {
                                 groupName: trimmedGroup,
                                 passphrase: trimmedPass,
                                 mode: selectedMode,
-                                colorHex: colorHex
+                                colorHex: colorHex,
+                                connectionMode: selectedConnectionMode
                             )
                             settings.addChannel(channel)
                             connection.switchChannel(to: channel)
@@ -335,6 +356,7 @@ struct JoinChannelSheet: View {
     @State private var passphraseInput = ""
     @State private var nickname = ""
     @State private var isPassphraseVisible = false
+    @State private var selectedConnectionMode: ConnectionMode = .auto
 
     private var wordCount: Int {
         passphraseWordCount(passphraseInput)
@@ -415,6 +437,25 @@ struct JoinChannelSheet: View {
                             .textFieldStyle(HollerTextFieldStyle())
                     }
 
+                    // Connection Mode
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("CONNECTION")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(Color.hollerTextSecondary)
+                            .tracking(1)
+
+                        Picker("Connection", selection: $selectedConnectionMode) {
+                            ForEach(ConnectionMode.allCases) { mode in
+                                Text(mode.displayName).tag(mode)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+
+                        Text(selectedConnectionMode.description)
+                            .font(.caption)
+                            .foregroundStyle(Color.hollerTextSecondary)
+                    }
+
                     Button {
                         let trimmedGroup = groupNameInput.trimmingCharacters(in: .whitespaces)
                         let trimmedPass = passphraseInput.trimmingCharacters(in: .whitespaces)
@@ -434,7 +475,8 @@ struct JoinChannelSheet: View {
                             code: code,
                             groupName: trimmedGroup,
                             passphrase: trimmedPass,
-                            mode: .custom
+                            mode: .custom,
+                            connectionMode: selectedConnectionMode
                         )
                         settings.addChannel(channel)
                         connection.switchChannel(to: channel)

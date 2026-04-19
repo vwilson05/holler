@@ -43,6 +43,35 @@ struct ChannelDetailView: View {
                     }
                     .padding(.top, 16)
 
+                    // Connection Mode
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("CONNECTION MODE")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(Color.hollerTextSecondary)
+                            .tracking(1)
+
+                        Picker("Connection", selection: Binding(
+                            get: { channel.connectionMode },
+                            set: { newMode in
+                                var updated = channel
+                                updated.connectionMode = newMode
+                                settings.activeChannel = updated
+                                // Restart connection with new mode
+                                connection.switchChannel(to: updated)
+                            }
+                        )) {
+                            ForEach(ConnectionMode.allCases) { mode in
+                                Text(mode.displayName).tag(mode)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+
+                        Text(channel.connectionMode.description)
+                            .font(.caption)
+                            .foregroundStyle(Color.hollerTextSecondary)
+                    }
+                    .padding(.horizontal, 16)
+
                     // Location sharing toggle
                     VStack(alignment: .leading, spacing: 8) {
                         Text("LOCATION SHARING")
