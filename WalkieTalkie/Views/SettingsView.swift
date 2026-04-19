@@ -21,14 +21,14 @@ struct SettingsView: View {
                                 HStack(spacing: 16) {
                                     Text(initials)
                                         .font(.title3.weight(.bold))
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(Color.hollerTextPrimary)
                                         .frame(width: 56, height: 56)
                                         .background(Circle().fill(Color.hollerAccent))
 
                                     VStack(alignment: .leading, spacing: 4) {
                                         TextField("Display Name", text: $nameInput)
                                             .font(.headline)
-                                            .foregroundStyle(.white)
+                                            .foregroundStyle(Color.hollerTextPrimary)
                                             .onSubmit { saveName() }
 
                                         Text("ID: \(String(settings.deviceID.prefix(8)))...")
@@ -67,42 +67,27 @@ struct SettingsView: View {
                             }
                         }
 
-                        // Relay Server
-                        settingsSection(title: "Relay Server") {
-                            VStack(alignment: .leading, spacing: 12) {
-                                TextField("wss://your-server.example.com", text: $relayInput)
-                                    .textFieldStyle(HollerTextFieldStyle())
-                                    .autocorrectionDisabled()
-                                    .textInputAutocapitalization(.never)
-                                    .keyboardType(.URL)
-                                    .onSubmit { saveRelay() }
+                        // Connection Status
+                        settingsSection(title: "Connection") {
+                            HStack {
+                                Circle()
+                                    .fill(connection.wsConnected ? Color.hollerOnline : Color.hollerOffline)
+                                    .frame(width: 8, height: 8)
 
-                                HStack {
-                                    Circle()
-                                        .fill(connection.wsConnected ? Color.hollerOnline : Color.hollerOffline)
-                                        .frame(width: 8, height: 8)
+                                Text(connection.wsConnected ? "Relay connected" : "LAN only")
+                                    .font(.subheadline)
+                                    .foregroundStyle(Color.hollerTextPrimary)
 
-                                    Text(connection.wsConnected ? "Connected" : (settings.relayServerURL.isEmpty ? "LAN only" : "Disconnected"))
+                                Spacer()
+
+                                if connection.lanPeerCount > 0 {
+                                    Text("\(connection.lanPeerCount) nearby")
                                         .font(.caption)
                                         .foregroundStyle(Color.hollerTextSecondary)
-
-                                    Spacer()
-
-                                    if relayInput != settings.relayServerURL {
-                                        Button("Save") { saveRelay() }
-                                            .font(.caption.weight(.medium))
-                                            .foregroundStyle(Color.hollerAccent)
-                                    }
                                 }
-
-                                Text("Leave empty for LAN-only mode. Deploy the included server for internet relay.")
-                                    .font(.caption)
-                                    .foregroundStyle(Color.hollerTextSecondary)
-
-                                Text("Connection mode (LAN / Relay / Auto) is set per channel in channel settings.")
-                                    .font(.caption)
-                                    .foregroundStyle(Color.hollerTextSecondary)
                             }
+                            .padding(14)
+                            .hollerCard()
                         }
 
                         // Notifications
@@ -143,7 +128,7 @@ struct SettingsView: View {
                                         HStack {
                                             Text(quality.displayName)
                                                 .font(.subheadline)
-                                                .foregroundStyle(.white)
+                                                .foregroundStyle(Color.hollerTextPrimary)
                                             Spacer()
                                             if settings.audioQuality == quality {
                                                 Image(systemName: "checkmark")
@@ -177,7 +162,7 @@ struct SettingsView: View {
                                                 .foregroundStyle(Color.hollerAccent)
                                             Text(pattern.displayName)
                                                 .font(.subheadline)
-                                                .foregroundStyle(.white)
+                                                .foregroundStyle(Color.hollerTextPrimary)
                                             Spacer()
                                             Text("Tap to preview")
                                                 .font(.caption)
@@ -196,8 +181,16 @@ struct SettingsView: View {
 
                         // Theme
                         settingsSection(title: "Appearance") {
-                            settingsToggle(icon: "moon.fill", title: "Dark Mode", isOn: $settings.prefersDarkMode)
-                                .hollerCard()
+                            VStack(spacing: 12) {
+                                Picker("Theme", selection: $settings.appTheme) {
+                                    ForEach(AppSettings.AppTheme.allCases) { theme in
+                                        Text(theme.displayName).tag(theme)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                            }
+                            .padding(14)
+                            .hollerCard()
                         }
 
                         // App Info
@@ -208,7 +201,7 @@ struct SettingsView: View {
                                         .foregroundStyle(Color.hollerTextSecondary)
                                     Spacer()
                                     Text("\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"))")
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(Color.hollerTextPrimary)
                                 }
                                 .font(.subheadline)
                             }
@@ -276,7 +269,7 @@ struct SettingsView: View {
 
             Text(title)
                 .font(.subheadline)
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.hollerTextPrimary)
 
             Spacer()
 
@@ -356,7 +349,7 @@ struct OnboardingView: View {
 
                 Text("Holler")
                     .font(.largeTitle.weight(.bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.hollerTextPrimary)
 
                 Text("Voice messaging for your crew")
                     .font(.subheadline)
@@ -483,7 +476,7 @@ struct OnboardingView: View {
                 } label: {
                     Text("Connect")
                         .font(.headline)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.hollerTextPrimary)
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
                         .background(

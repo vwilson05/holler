@@ -61,7 +61,7 @@ struct PTTButton: View {
                         .font(.system(size: 36, weight: .medium))
                 }
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(.white) // Always white on the colored button
 
             // Cancel hint
             if isPressed && !isCancelled {

@@ -1,14 +1,16 @@
 import SwiftUI
 
 extension Color {
-    // MARK: - Holler Theme Colors
+    // MARK: - Adaptive Holler Theme Colors
 
     static let hollerAccent = Color(hex: "#00C9A7")
-    static let hollerBackground = Color(hex: "#0F0F0F")
-    static let hollerCard = Color(hex: "#1A1A1A")
-    static let hollerCardElevated = Color(hex: "#242424")
-    static let hollerTextPrimary = Color.white
-    static let hollerTextSecondary = Color(hex: "#A0A0A0")
+
+    static let hollerBackground = Color(.hollerBackground)
+    static let hollerCard = Color(.hollerCard)
+    static let hollerCardElevated = Color(.hollerCardElevated)
+    static let hollerTextPrimary = Color(.hollerTextPrimary)
+    static let hollerTextSecondary = Color(.hollerTextSecondary)
+
     static let hollerRecording = Color(hex: "#FF3B30")
     static let hollerSent = Color(hex: "#34C759")
     static let hollerReceived = Color(hex: "#5AC8FA")
@@ -42,11 +44,45 @@ extension Color {
     }
 }
 
+// MARK: - UIColor adaptive colors (light/dark)
+
+extension UIColor {
+    static let hollerBackground = UIColor { traits in
+        traits.userInterfaceStyle == .dark
+            ? UIColor(red: 0.06, green: 0.06, blue: 0.06, alpha: 1)    // #0F0F0F
+            : UIColor(red: 0.97, green: 0.96, blue: 0.95, alpha: 1)    // #F8F5F0
+    }
+
+    static let hollerCard = UIColor { traits in
+        traits.userInterfaceStyle == .dark
+            ? UIColor(red: 0.10, green: 0.10, blue: 0.10, alpha: 1)    // #1A1A1A
+            : UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1)      // #FFFFFF
+    }
+
+    static let hollerCardElevated = UIColor { traits in
+        traits.userInterfaceStyle == .dark
+            ? UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)    // #242424
+            : UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)    // #F5F5F5
+    }
+
+    static let hollerTextPrimary = UIColor { traits in
+        traits.userInterfaceStyle == .dark
+            ? .white
+            : UIColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1)    // #1F1F1F
+    }
+
+    static let hollerTextSecondary = UIColor { traits in
+        traits.userInterfaceStyle == .dark
+            ? UIColor(red: 0.63, green: 0.63, blue: 0.63, alpha: 1)    // #A0A0A0
+            : UIColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1)    // #737373
+    }
+}
+
 extension View {
     func hollerCard() -> some View {
         self
             .background(Color.hollerCard)
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            .shadow(color: .black.opacity(0.2), radius: 4, y: 2)
+            .shadow(color: .black.opacity(0.1), radius: 4, y: 2)
     }
 }

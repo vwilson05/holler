@@ -320,7 +320,7 @@ struct CreateChannelSheet: View {
                         } label: {
                             Text("Create Channel")
                                 .font(.headline)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Color.hollerTextPrimary)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 52)
                                 .background(
@@ -484,7 +484,7 @@ struct JoinChannelSheet: View {
                     } label: {
                         Text("Join Channel")
                             .font(.headline)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.hollerTextPrimary)
                             .frame(maxWidth: .infinity)
                             .frame(height: 52)
                             .background(
@@ -520,7 +520,7 @@ struct HollerTextFieldStyle: TextFieldStyle {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.hollerCard)
             )
-            .foregroundStyle(.white)
+            .foregroundStyle(Color.hollerTextPrimary)
             .tint(Color.hollerAccent)
     }
 }

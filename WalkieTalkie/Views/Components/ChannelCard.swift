@@ -26,7 +26,7 @@ struct ChannelCard: View {
                     HStack {
                         Text(channel.name)
                             .font(.headline)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.hollerTextPrimary)
 
                         if isActive {
                             Text("ACTIVE")

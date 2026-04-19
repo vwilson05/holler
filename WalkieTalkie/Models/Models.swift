@@ -55,8 +55,27 @@ final class AppSettings: ObservableObject {
         didSet { defaults.set(stayActiveInBackground, forKey: "stayActiveInBackground") }
     }
 
-    @Published var prefersDarkMode: Bool {
-        didSet { defaults.set(prefersDarkMode, forKey: "prefersDarkMode") }
+    enum AppTheme: String, CaseIterable, Identifiable {
+        case system, light, dark
+        var id: String { rawValue }
+        var displayName: String {
+            switch self {
+            case .system: return "System"
+            case .light: return "Light"
+            case .dark: return "Dark"
+            }
+        }
+        var colorScheme: ColorScheme? {
+            switch self {
+            case .system: return nil
+            case .light: return .light
+            case .dark: return .dark
+            }
+        }
+    }
+
+    @Published var appTheme: AppTheme {
+        didSet { defaults.set(appTheme.rawValue, forKey: "appTheme") }
     }
 
     var isSetUp: Bool {
@@ -89,7 +108,7 @@ final class AppSettings: ObservableObject {
         self.notificationHaptic = defaults.object(forKey: "notificationHaptic") as? Bool ?? true
         self.notificationBanner = defaults.object(forKey: "notificationBanner") as? Bool ?? true
         self.audioQuality = AudioQuality(rawValue: defaults.string(forKey: "audioQuality") ?? "") ?? .medium
-        self.prefersDarkMode = defaults.object(forKey: "prefersDarkMode") as? Bool ?? true
+        self.appTheme = AppTheme(rawValue: defaults.string(forKey: "appTheme") ?? "") ?? .dark
         self.stayActiveInBackground = defaults.object(forKey: "stayActiveInBackground") as? Bool ?? true
 
         // Load channels

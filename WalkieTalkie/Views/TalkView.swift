@@ -71,7 +71,7 @@ struct TalkView: View {
                     VStack(spacing: 2) {
                         Text("Holler")
                             .font(.headline.weight(.bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.hollerTextPrimary)
                     }
                 }
             }
@@ -145,7 +145,7 @@ struct TalkView: View {
                 .font(.subheadline)
 
             TextField("Search messages...", text: $searchText)
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.hollerTextPrimary)
                 .font(.subheadline)
                 .autocorrectionDisabled()
         }
@@ -194,7 +194,7 @@ struct TalkView: View {
 
             Text("Listening to \(sender)")
                 .font(.subheadline.weight(.medium))
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.hollerTextPrimary)
 
             Spacer()
 

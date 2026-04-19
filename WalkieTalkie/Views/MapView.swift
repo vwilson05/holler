@@ -67,7 +67,7 @@ struct MapTabView: View {
                         } label: {
                             Label("Share with channel", systemImage: "location.fill")
                                 .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Color.hollerTextPrimary)
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 12)
                                 .background(
@@ -103,7 +103,7 @@ struct MapTabView: View {
                     Annotation(settings.displayName + " (you)", coordinate: myLoc) {
                         Text(String(settings.displayName.prefix(1)).uppercased())
                             .font(.caption2.weight(.bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.hollerTextPrimary)
                             .frame(width: 32, height: 32)
                             .background(Circle().fill(Color.hollerAccent))
                             .overlay(Circle().stroke(.white, lineWidth: 2))
@@ -157,7 +157,7 @@ struct MapTabView: View {
             VStack(spacing: 2) {
                 Text(annotation.initials)
                     .font(.caption2.weight(.bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.hollerTextPrimary)
                     .frame(width: 32, height: 32)
                     .background(
                         Circle()
@@ -182,14 +182,14 @@ struct MapTabView: View {
         HStack(spacing: 12) {
             Text(annotation.initials)
                 .font(.headline.weight(.bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.hollerTextPrimary)
                 .frame(width: 44, height: 44)
                 .background(Circle().fill(Color.hollerAccent))
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(annotation.name)
                     .font(.headline)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.hollerTextPrimary)
 
                 if let preview = annotation.lastMessagePreview {
                     Text("Last: \"\(preview)\"")
@@ -224,7 +224,7 @@ struct MapTabView: View {
 
             Text("Location Sharing Off")
                 .font(.title3.weight(.semibold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.hollerTextPrimary)
 
             Text("Enable location sharing in your active channel to see members on the map.")
                 .font(.subheadline)
@@ -242,7 +242,7 @@ struct MapTabView: View {
                 } label: {
                     Label("Enable for \(channel.name)", systemImage: "location.fill")
                         .font(.headline)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.hollerTextPrimary)
                         .padding(.horizontal, 24)
                         .padding(.vertical, 14)
                         .background(

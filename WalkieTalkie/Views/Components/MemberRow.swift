@@ -12,7 +12,7 @@ struct MemberRow: View {
             ZStack(alignment: .bottomTrailing) {
                 Text(member.initials)
                     .font(.subheadline.weight(.bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.hollerTextPrimary)
                     .frame(width: 40, height: 40)
                     .background(
                         Circle()
@@ -34,7 +34,7 @@ struct MemberRow: View {
                 HStack(spacing: 6) {
                     Text(member.name)
                         .font(.subheadline.weight(.medium))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.hollerTextPrimary)
 
                     if member.isMuted {
                         Image(systemName: "speaker.slash.fill")

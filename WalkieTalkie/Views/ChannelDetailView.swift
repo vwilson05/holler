@@ -26,7 +26,7 @@ struct ChannelDetailView: View {
 
                         Text(channel.name)
                             .font(.title2.weight(.bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.hollerTextPrimary)
 
                         if !channel.groupName.isEmpty {
                             Text(channel.groupName)
@@ -157,7 +157,7 @@ struct ChannelDetailView: View {
                                 Image(systemName: "chevron.right")
                                     .font(.caption)
                             }
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.hollerTextPrimary)
                             .padding(14)
                             .hollerCard()
                         }

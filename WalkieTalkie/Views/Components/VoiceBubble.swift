@@ -83,7 +83,7 @@ struct VoiceBubble: View {
     private var avatar: some View {
         Text(senderInitials)
             .font(.caption2.weight(.bold))
-            .foregroundStyle(.white)
+            .foregroundStyle(Color.hollerTextPrimary)
             .frame(width: 28, height: 28)
             .background(
                 Circle()

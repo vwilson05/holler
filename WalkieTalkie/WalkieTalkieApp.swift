@@ -29,7 +29,7 @@ struct HollerApp: App {
             .environmentObject(settings)
             .environmentObject(connection)
             .environmentObject(audio)
-            .preferredColorScheme(settings.prefersDarkMode ? .dark : .light)
+            .preferredColorScheme(settings.appTheme.colorScheme)
         }
     }
 }
