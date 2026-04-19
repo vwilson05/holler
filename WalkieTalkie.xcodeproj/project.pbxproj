@@ -391,7 +391,7 @@
 				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6SULXSSZL7;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = WalkieTalkie/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -420,7 +420,7 @@
 				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6SULXSSZL7;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = WalkieTalkie/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
