@@ -49,9 +49,8 @@ final class AudioManager: NSObject, ObservableObject {
             try session.setCategory(
                 .playAndRecord,
                 mode: .default,
-                options: [.defaultToSpeaker, .allowBluetooth, .mixWithOthers]
+                options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .mixWithOthers]
             )
-            try session.overrideOutputAudioPort(.speaker)
             try session.setActive(true)
         } catch {
             print("[Audio] Session config error: \(error)")
@@ -121,9 +120,13 @@ final class AudioManager: NSObject, ObservableObject {
             return
         }
 
+        let currentRoute = AVAudioSession.sharedInstance().currentRoute
+        let outputName = currentRoute.outputs.first?.portName ?? "unknown"
+        print("[Audio] Route changed (reason: \(reason.rawValue)): output → \(outputName)")
+
         if reason == .oldDeviceUnavailable {
-            // Headphones unplugged - audio routes to speaker, keep playing
-            print("[Audio] Route changed: old device unavailable, continuing playback")
+            // Headphones/BT disconnected - .defaultToSpeaker handles fallback automatically
+            print("[Audio] Device disconnected, falling back to speaker")
         }
     }
 
