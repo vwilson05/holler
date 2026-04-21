@@ -6,6 +6,7 @@ struct VoiceBubble: View {
     var channelColor: Color = .hollerAccent
 
     @EnvironmentObject var audio: AudioManager
+    @State private var isTranscriptExpanded = false
 
     private var isOwnMessage: Bool { message.isFromCurrentUser }
     private var isCurrentlyPlaying: Bool { audio.currentPlaybackMessageID == message.id }
@@ -53,13 +54,24 @@ struct VoiceBubble: View {
                         )
                     }
 
-                    // Transcription
+                    // Transcription (tap to expand)
                     if let transcription = message.transcription, !transcription.isEmpty {
                         Text(transcription)
                             .font(.caption)
                             .foregroundStyle(Color.hollerTextSecondary)
-                            .lineLimit(3)
+                            .lineLimit(isTranscriptExpanded ? nil : 2)
                             .padding(.horizontal, 4)
+                            .animation(.easeInOut(duration: 0.2), value: isTranscriptExpanded)
+                            .onTapGesture {
+                                withAnimation { isTranscriptExpanded.toggle() }
+                            }
+
+                        if !isTranscriptExpanded && transcription.count > 80 {
+                            Text("tap to expand")
+                                .font(.system(size: 9))
+                                .foregroundStyle(Color.hollerTextSecondary.opacity(0.4))
+                                .padding(.horizontal, 4)
+                        }
                     }
 
                     // Timestamp
