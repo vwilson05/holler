@@ -6,6 +6,7 @@ struct HollerApp: App {
     @StateObject private var settings = AppSettings.shared
     @StateObject private var connection = ConnectionManager.shared
     @StateObject private var audio = AudioManager.shared
+    @StateObject private var systemPTT = PTTSystemManager.shared
 
     init() {
         // Request notification permissions on launch (fallback for background audio)
@@ -15,6 +16,9 @@ struct HollerApp: App {
             }
             print("[App] Notification permission granted: \(granted)")
         }
+
+        // Initialize system PTT (Apple PushToTalk framework)
+        PTTSystemManager.shared.setup()
     }
 
     var body: some Scene {
@@ -29,6 +33,7 @@ struct HollerApp: App {
             .environmentObject(settings)
             .environmentObject(connection)
             .environmentObject(audio)
+            .environmentObject(systemPTT)
             .preferredColorScheme(settings.appTheme.colorScheme)
             .onOpenURL { url in
                 handleIncomingURL(url)

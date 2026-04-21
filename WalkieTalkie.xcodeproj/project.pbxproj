@@ -31,6 +31,7 @@
 		A6010016 /* MemberRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020016 /* MemberRow.swift */; };
 		A6010017 /* ChannelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020017 /* ChannelCard.swift */; };
 		A6010018 /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020018 /* Color+Theme.swift */; };
+		A6010020 /* PTTSystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020020 /* PTTSystemManager.swift */; };
 		A6010019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6020019 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		A6020016 /* MemberRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRow.swift; sourceTree = "<group>"; };
 		A6020017 /* ChannelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCard.swift; sourceTree = "<group>"; };
 		A6020018 /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
+		A6020020 /* PTTSystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTSystemManager.swift; sourceTree = "<group>"; };
 		A6020019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A602001A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A602001B /* WalkieTalkie.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WalkieTalkie.entitlements; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				A602000B /* LocationManager.swift */,
 				A602000C /* TranscriptionManager.swift */,
 				A602000D /* HapticManager.swift */,
+				A6020020 /* PTTSystemManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				A6010016 /* MemberRow.swift in Sources */,
 				A6010017 /* ChannelCard.swift in Sources */,
 				A6010018 /* Color+Theme.swift in Sources */,
+				A6010020 /* PTTSystemManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +395,7 @@
 				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6SULXSSZL7;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = WalkieTalkie/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -420,7 +424,7 @@
 				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6SULXSSZL7;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = WalkieTalkie/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

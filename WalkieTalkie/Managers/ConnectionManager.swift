@@ -80,6 +80,22 @@ final class ConnectionManager: ObservableObject {
 
         isActive = true
         print("[Connection] Started for channel: \(channel.name) (\(channel.code))")
+
+        // Wire system PTT callbacks to send audio through our pipeline
+        Task { @MainActor in
+            PTTSystemManager.shared.onTransmissionEnded = { [weak self] audioData, durationMs in
+                guard let self, let audioData, durationMs > 0 else { return }
+                self.sendVoice(audioData: audioData, durationMs: durationMs)
+            }
+
+            // Join system PTT channel if not already active
+            if PTTSystemManager.shared.isSystemPTTActive {
+                PTTSystemManager.shared.joinChannel(
+                    channelUUID: channel.id,
+                    channelName: channel.name
+                )
+            }
+        }
     }
 
     func stop() {
@@ -103,9 +119,19 @@ final class ConnectionManager: ObservableObject {
 
     func switchChannel(to channel: Channel) {
         stop()
+
+        // Leave previous system PTT channel
+        Task { @MainActor in PTTSystemManager.shared.leaveChannel() }
+
         settings.activeChannelID = channel.id
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
             self?.start()
+
+            // Join system PTT channel (shows floating pill UI)
+            PTTSystemManager.shared.joinChannel(
+                channelUUID: channel.id,
+                channelName: channel.name
+            )
         }
     }
 
@@ -268,6 +294,15 @@ final class ConnectionManager: ObservableObject {
                 // Auto-play if this is the active channel
                 if matchingChannel.id == settings.activeChannelID {
                     audio.enqueueAndPlay(voiceMsg)
+                    // Show active speaker on system PTT UI
+                    let senderName = wireMsg.sender
+                    let channelID = matchingChannel.id
+                    let clearDelay = Double(voicePayload.durationMs) / 1000.0 + 0.5
+                    Task { @MainActor in
+                        PTTSystemManager.shared.reportIncomingSpeaker(name: senderName, on: channelID)
+                        try? await Task.sleep(for: .seconds(clearDelay))
+                        PTTSystemManager.shared.clearIncomingSpeaker(on: channelID)
+                    }
                 }
                 sendLocalNotification(from: wireMsg.sender, durationMs: voicePayload.durationMs)
             }
