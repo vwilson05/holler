@@ -1,7 +1,7 @@
 import Foundation
 
 enum WireMessageType: String, Codable {
-    case voice, location, join, leave, ping, pong, members, transcription
+    case voice, location, join, leave, ping, pong, members, transcription, reaction
 }
 
 struct WireMessage: Codable {
@@ -62,6 +62,7 @@ enum WirePayload: Codable {
     case location(LocationPayload)
     case members(MembersPayload)
     case transcription(TranscriptionPayload)
+    case reaction(ReactionPayload)
     case empty
 
     struct VoicePayload: Codable {
@@ -100,11 +101,22 @@ enum WirePayload: Codable {
         }
     }
 
+    struct ReactionPayload: Codable {
+        let messageID: String
+        let emoji: String
+
+        enum CodingKeys: String, CodingKey {
+            case messageID = "message_id"
+            case emoji
+        }
+    }
+
     enum CodingKeys: String, CodingKey {
         case audio, durationMs = "duration_ms"
         case lat, lng, accuracy
         case members
         case messageID = "message_id", text
+        case emoji
     }
 
     init(from decoder: Decoder) throws {
@@ -119,6 +131,9 @@ enum WirePayload: Codable {
             self = .location(LocationPayload(lat: lat, lng: lng, accuracy: accuracy))
         } else if let members = try? container.decode([MembersPayload.MemberInfo].self, forKey: .members) {
             self = .members(MembersPayload(members: members))
+        } else if let messageID = try? container.decode(String.self, forKey: .messageID),
+                  let emoji = try? container.decode(String.self, forKey: .emoji) {
+            self = .reaction(ReactionPayload(messageID: messageID, emoji: emoji))
         } else if let messageID = try? container.decode(String.self, forKey: .messageID) {
             let text = (try? container.decode(String.self, forKey: .text)) ?? ""
             self = .transcription(TranscriptionPayload(messageID: messageID, text: text))
@@ -142,6 +157,9 @@ enum WirePayload: Codable {
         case .transcription(let p):
             try container.encode(p.messageID, forKey: .messageID)
             try container.encode(p.text, forKey: .text)
+        case .reaction(let p):
+            try container.encode(p.messageID, forKey: .messageID)
+            try container.encode(p.emoji, forKey: .emoji)
         case .empty:
             break
         }

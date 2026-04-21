@@ -2,6 +2,7 @@ import Foundation
 import UserNotifications
 import UIKit
 import Combine
+import AVFoundation
 
 /// Orchestrates Multipeer + WebSocket, deduplicates messages, manages per-channel state
 final class ConnectionManager: ObservableObject {
@@ -219,6 +220,60 @@ final class ConnectionManager: ObservableObject {
         memberLocations[settings.deviceID] = (lat, lng, accuracy)
     }
 
+    // MARK: - Send Reaction
+
+    func sendReaction(emoji: String, toMessageID messageID: UUID) {
+        guard let channel = settings.activeChannel else { return }
+
+        let wireMsg = WireMessage(
+            type: .reaction,
+            sender: settings.displayName,
+            senderID: settings.deviceID,
+            room: channel.code,
+            payload: .reaction(WirePayload.ReactionPayload(messageID: messageID.uuidString, emoji: emoji))
+        )
+
+        if channel.connectionMode != .relay {
+            multipeer.send(wireMsg)
+        }
+        if channel.connectionMode != .lan && !settings.relayServerURL.isEmpty {
+            ws.send(wireMsg)
+        }
+
+        // Add locally
+        let reaction = MessageReaction(senderID: settings.deviceID, senderName: settings.displayName, emoji: emoji)
+        addReaction(reaction, toMessage: messageID, inChannel: channel.id)
+
+        print("[Connection] Sent reaction \(emoji) on \(messageID)")
+    }
+
+    private func addReaction(_ reaction: MessageReaction, toMessage messageID: UUID, inChannel channelID: UUID) {
+        guard var messages = messagesByChannel[channelID] else { return }
+        if let idx = messages.firstIndex(where: { $0.id == messageID }) {
+            // Don't duplicate — one reaction per sender
+            messages[idx].reactions.removeAll(where: { $0.senderID == reaction.senderID })
+            messages[idx].reactions.append(reaction)
+            messagesByChannel[channelID] = messages
+        }
+    }
+
+    private static let emojiNames: [String: String] = [
+        "👍": "thumbs up",
+        "❤️": "love",
+        "😂": "haha",
+        "🔥": "fire"
+    ]
+
+    private let speechSynth = AVSpeechSynthesizer()
+
+    private func announceReaction(_ text: String) {
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 1.2
+        utterance.volume = 0.6
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        speechSynth.speak(utterance)
+    }
+
     // MARK: - Receive
 
     private func setupCallbacks() {
@@ -346,6 +401,24 @@ final class ConnectionManager: ObservableObject {
             guard case .transcription(let transPayload) = wireMsg.payload else { return }
             if let messageID = UUID(uuidString: transPayload.messageID) {
                 updateTranscription(messageID: messageID, channelID: matchingChannel.id, text: transPayload.text)
+            }
+
+        case .reaction:
+            guard case .reaction(let reactionPayload) = wireMsg.payload else { return }
+            if let messageID = UUID(uuidString: reactionPayload.messageID) {
+                let reaction = MessageReaction(
+                    senderID: wireMsg.senderID,
+                    senderName: wireMsg.sender,
+                    emoji: reactionPayload.emoji
+                )
+                addReaction(reaction, toMessage: messageID, inChannel: matchingChannel.id)
+
+                // TTS announcement for hands-free
+                let emojiName = Self.emojiNames[reactionPayload.emoji] ?? "reacted to"
+                let announcement = "\(wireMsg.sender): \(emojiName)"
+                announceReaction(announcement)
+
+                print("[Connection] Reaction from \(wireMsg.sender): \(reactionPayload.emoji) on \(reactionPayload.messageID)")
             }
 
         case .ping, .pong:

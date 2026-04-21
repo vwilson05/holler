@@ -1,5 +1,12 @@
 import Foundation
 
+struct MessageReaction: Codable, Equatable, Identifiable {
+    var id: String { "\(senderID)-\(emoji)" }
+    let senderID: String
+    let senderName: String
+    let emoji: String
+}
+
 struct VoiceMessage: Identifiable, Codable, Equatable {
     let id: UUID
     let senderID: String
@@ -10,6 +17,7 @@ struct VoiceMessage: Identifiable, Codable, Equatable {
     let audioData: Data
     var transcription: String?
     var isPlayed: Bool
+    var reactions: [MessageReaction]
 
     init(
         id: UUID = UUID(),
@@ -20,7 +28,8 @@ struct VoiceMessage: Identifiable, Codable, Equatable {
         durationMs: Int,
         audioData: Data,
         transcription: String? = nil,
-        isPlayed: Bool = false
+        isPlayed: Bool = false,
+        reactions: [MessageReaction] = []
     ) {
         self.id = id
         self.senderID = senderID
@@ -31,6 +40,7 @@ struct VoiceMessage: Identifiable, Codable, Equatable {
         self.audioData = audioData
         self.transcription = transcription
         self.isPlayed = isPlayed
+        self.reactions = reactions
     }
 
     var durationFormatted: String {
