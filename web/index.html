@@ -1419,10 +1419,18 @@ html, body {
     recordingTimer = setInterval(updateRecordingTimer, 100);
 
     try {
-      // Prefer mp4 — it's the only format both Safari AND Chrome can record AND play.
-      // Safari can't play webm. Chrome can play mp4.
+      // Prefer webm/opus — as of Safari 18 (2024) both Chrome AND Safari can
+      // record AND decode webm/opus, so it's the new common ground. The old
+      // preference was audio/mp4, but Chrome's audio/mp4 is actually
+      // Opus-in-mp4 (Chrome has no AAC encoder), which Safari cannot decode
+      // — that was the "Chrome records, Safari sees transcript but no audio"
+      // bug reported by beta testers 2026-04-23.
+      //
+      // Backward compat: older iOS Safari (pre-18) returns false for
+      // isTypeSupported('audio/webm;codecs=opus'), so it falls through to
+      // the mp4 path and keeps producing mp4/AAC exactly like before.
       let mimeType = '';
-      for (const candidate of ['audio/mp4', 'audio/mp4;codecs=opus', 'audio/aac', 'audio/webm;codecs=opus', 'audio/webm', '']) {
+      for (const candidate of ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/mp4;codecs=opus', 'audio/aac', '']) {
         if (candidate === '' || MediaRecorder.isTypeSupported(candidate)) {
           mimeType = candidate;
           break;
