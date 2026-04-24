@@ -32,6 +32,10 @@ final class AppSettings: ObservableObject {
             if let id = activeChannelID {
                 defaults.set(id.uuidString, forKey: "activeChannelID")
             }
+            // Defer Watch sync to avoid circular init (AppSettings.init → syncToWatch → AppSettings.shared)
+            DispatchQueue.main.async {
+                WatchSyncManager.shared.syncToWatch()
+            }
         }
     }
 
@@ -53,6 +57,17 @@ final class AppSettings: ObservableObject {
 
     @Published var stayActiveInBackground: Bool {
         didSet { defaults.set(stayActiveInBackground, forKey: "stayActiveInBackground") }
+    }
+
+    /// When true, the app uses Apple's PushToTalk framework to show a
+    /// floating pill in the Dynamic Island + Lock Screen and to enable
+    /// system-level "talk from anywhere" (Bluetooth accessory buttons too).
+    /// When false, the app is a normal foreground-first app: no Island,
+    /// no Lock Screen pill. Incoming-message background playback is
+    /// completely separate (see `stayActiveInBackground`) and unaffected.
+    /// Opt-in per beta feedback (default OFF, 2026-04-23).
+    @Published var systemPTTEnabled: Bool {
+        didSet { defaults.set(systemPTTEnabled, forKey: "systemPTTEnabled") }
     }
 
     enum AppTheme: String, CaseIterable, Identifiable {
@@ -110,6 +125,9 @@ final class AppSettings: ObservableObject {
         self.audioQuality = AudioQuality(rawValue: defaults.string(forKey: "audioQuality") ?? "") ?? .medium
         self.appTheme = AppTheme(rawValue: defaults.string(forKey: "appTheme") ?? "") ?? .dark
         self.stayActiveInBackground = defaults.object(forKey: "stayActiveInBackground") as? Bool ?? true
+        // Default OFF — beta feedback 2026-04-23: system PTT (Dynamic Island /
+        // Lock Screen) should be explicit opt-in, not on by default.
+        self.systemPTTEnabled = defaults.object(forKey: "systemPTTEnabled") as? Bool ?? false
 
         // Load channels
         if let data = defaults.data(forKey: "channels"),

@@ -89,8 +89,10 @@ final class ConnectionManager: ObservableObject {
                 self.sendVoice(audioData: audioData, durationMs: durationMs)
             }
 
-            // Join system PTT channel if not already active
-            if PTTSystemManager.shared.isSystemPTTActive {
+            // Join system PTT channel only if the user has opted in AND
+            // the PTChannelManager is ready. Background audio playback is
+            // unaffected by this gate — it runs through AudioManager.
+            if AppSettings.shared.systemPTTEnabled && PTTSystemManager.shared.isSystemPTTActive {
                 PTTSystemManager.shared.joinChannel(
                     channelUUID: channel.id,
                     channelName: channel.name
@@ -121,18 +123,21 @@ final class ConnectionManager: ObservableObject {
     func switchChannel(to channel: Channel) {
         stop()
 
-        // Leave previous system PTT channel
+        // Leave previous system PTT channel (no-op if we never joined)
         Task { @MainActor in PTTSystemManager.shared.leaveChannel() }
 
         settings.activeChannelID = channel.id
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
             self?.start()
 
-            // Join system PTT channel (shows floating pill UI)
-            PTTSystemManager.shared.joinChannel(
-                channelUUID: channel.id,
-                channelName: channel.name
-            )
+            // Join system PTT channel (shows floating pill UI) only when
+            // opt-in is on. Background autoplay is unaffected.
+            if AppSettings.shared.systemPTTEnabled && PTTSystemManager.shared.isSystemPTTActive {
+                PTTSystemManager.shared.joinChannel(
+                    channelUUID: channel.id,
+                    channelName: channel.name
+                )
+            }
         }
     }
 
@@ -140,6 +145,9 @@ final class ConnectionManager: ObservableObject {
 
     func sendVoice(audioData: Data, durationMs: Int) {
         guard let channel = settings.activeChannel else { return }
+
+        // Phone just transmitted — claim playback
+        WatchSyncManager.shared.phoneDidTransmit()
 
         let messageID = UUID()
         let base64Audio = audioData.base64EncodedString()
@@ -196,6 +204,43 @@ final class ConnectionManager: ObservableObject {
         print("[Connection] Sent voice: \(durationMs)ms, \(audioData.count) bytes")
     }
 
+    /// Relay voice from Watch through iPhone's WebSocket
+    func sendVoiceFromWatch(audioBase64: String, durationMs: Int, senderName: String, senderId: String) {
+        guard let channel = settings.activeChannel else { return }
+
+        let messageID = UUID()
+        let wireMsg = WireMessage(
+            type: .voice,
+            id: messageID.uuidString,
+            sender: senderName,
+            senderID: senderId,
+            room: channel.code,
+            payload: .voice(WirePayload.VoicePayload(audio: audioBase64, durationMs: durationMs))
+        )
+
+        // Send to relay for other clients
+        if channel.connectionMode != .lan && !settings.relayServerURL.isEmpty {
+            ws.send(wireMsg)
+        }
+
+        // Add to local messages so it shows on iPhone too
+        // Use iPhone's deviceID so it shows on the right side (as "own message")
+        if let audioData = Data(base64Encoded: audioBase64) {
+            let voiceMsg = VoiceMessage(
+                id: messageID,
+                senderID: settings.deviceID,
+                senderName: settings.displayName,
+                channelID: channel.id,
+                durationMs: durationMs,
+                audioData: audioData,
+                isPlayed: true // Don't auto-play Watch's own message on phone
+            )
+            addMessage(voiceMsg, to: channel.id)
+        }
+
+        print("[Connection] Relayed Watch voice: \(senderName), \(durationMs)ms")
+    }
+
     // MARK: - Send Location
 
     func sendLocation(lat: Double, lng: Double, accuracy: Double) {
@@ -243,6 +288,12 @@ final class ConnectionManager: ObservableObject {
         // Add locally
         let reaction = MessageReaction(senderID: settings.deviceID, senderName: settings.displayName, emoji: emoji)
         addReaction(reaction, toMessage: messageID, inChannel: channel.id)
+
+        // Local feedback: haptic + TTS confirmation
+        let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+        impactFeedback.impactOccurred()
+        let emojiName = Self.emojiNames[emoji] ?? "reacted"
+        announceReaction(emojiName)
 
         print("[Connection] Sent reaction \(emoji) on \(messageID)")
     }
@@ -346,8 +397,9 @@ final class ConnectionManager: ObservableObject {
             // Check if member is muted
             let existingMember = membersByChannel[matchingChannel.id]?.first(where: { $0.id == wireMsg.senderID })
             if existingMember?.isMuted != true {
-                // Auto-play if this is the active channel
-                if matchingChannel.id == settings.activeChannelID {
+                // Auto-play if this is the active channel AND phone is the active playback device
+                if matchingChannel.id == settings.activeChannelID,
+                   WatchSyncManager.shared.shouldPlayOnPhone {
                     audio.enqueueAndPlay(voiceMsg)
                     // Show active speaker on system PTT UI
                     let senderName = wireMsg.sender
@@ -359,7 +411,21 @@ final class ConnectionManager: ObservableObject {
                         PTTSystemManager.shared.clearIncomingSpeaker(on: channelID)
                     }
                 }
-                sendLocalNotification(from: wireMsg.sender, durationMs: voicePayload.durationMs)
+                // Relay to Watch if it's the active playback device
+                if !WatchSyncManager.shared.shouldPlayOnPhone {
+                    WatchSyncManager.shared.relayVoiceToWatch(
+                        audioData: audioData,
+                        senderId: wireMsg.senderID,
+                        senderName: wireMsg.sender,
+                        duration: Double(voicePayload.durationMs) / 1000.0
+                    )
+                }
+
+                // Only send local notification if phone is the active playback device
+                // Otherwise Watch handles it and we don't want the phone buzzing
+                if WatchSyncManager.shared.shouldPlayOnPhone {
+                    sendLocalNotification(from: wireMsg.sender, durationMs: voicePayload.durationMs)
+                }
             }
 
             // Transcribe incoming message

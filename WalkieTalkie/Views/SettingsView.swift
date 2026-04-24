@@ -118,6 +118,32 @@ struct SettingsView: View {
                                 .padding(.top, 6)
                         }
 
+                        // System PTT — Dynamic Island / Lock Screen integration
+                        settingsSection(title: "System Push-to-Talk") {
+                            VStack(spacing: 0) {
+                                settingsToggle(
+                                    icon: "mic.circle.fill",
+                                    title: "Talk from Island & Lock Screen",
+                                    isOn: Binding(
+                                        get: { settings.systemPTTEnabled },
+                                        set: { newValue in
+                                            settings.systemPTTEnabled = newValue
+                                            applySystemPTT(enabled: newValue)
+                                        }
+                                    )
+                                )
+                            }
+                            .hollerCard()
+
+                            Text(settings.systemPTTEnabled
+                                ? "Holler appears in the Dynamic Island and Lock Screen so you can press-to-talk from anywhere. Supports Bluetooth PTT buttons."
+                                : "Recording happens only from inside the app. Incoming messages still auto-play in the background (see above).")
+                                .font(.caption)
+                                .foregroundStyle(Color.hollerTextSecondary)
+                                .padding(.horizontal, 4)
+                                .padding(.top, 6)
+                        }
+
                         // Audio Quality
                         settingsSection(title: "Audio Quality") {
                             VStack(spacing: 0) {
@@ -247,6 +273,29 @@ struct SettingsView: View {
         connection.stop()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             connection.start()
+        }
+    }
+
+    /// Called when the System PTT toggle flips. When turning ON, boots
+    /// PTChannelManager and joins the active channel so the Island/LS pill
+    /// appears. When turning OFF, tears it down (leaves the channel, which
+    /// removes the pill). Background-audio autoplay is untouched either
+    /// direction — that pipeline runs through AudioManager.
+    private func applySystemPTT(enabled: Bool) {
+        if enabled {
+            PTTSystemManager.shared.setup()
+            // After setup resolves, join the active channel (setup() is
+            // async — wait a moment for isSystemPTTActive to flip).
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                guard PTTSystemManager.shared.isSystemPTTActive,
+                      let active = settings.activeChannel else { return }
+                PTTSystemManager.shared.joinChannel(
+                    channelUUID: active.id,
+                    channelName: active.name
+                )
+            }
+        } else {
+            PTTSystemManager.shared.teardown()
         }
     }
 

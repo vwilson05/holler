@@ -41,8 +41,14 @@ final class PTTSystemManager: NSObject, ObservableObject {
 
     // MARK: - Setup
 
-    /// Initialize the PTChannelManager. Call this early in app lifecycle.
+    /// Initialize the PTChannelManager. Call this only when the user has
+    /// opted in to system-level PTT (see `AppSettings.systemPTTEnabled`).
+    /// Safe to call repeatedly — re-entrant guard below.
     func setup() {
+        if channelManager != nil {
+            print("[SystemPTT] setup() — already initialized, no-op")
+            return
+        }
         PTChannelManager.channelManager(delegate: self, restorationDelegate: self) { [weak self] manager, error in
             DispatchQueue.main.async {
                 if let error = error {
@@ -61,6 +67,21 @@ final class PTTSystemManager: NSObject, ObservableObject {
                 }
             }
         }
+    }
+
+    /// Tear down the system PTT integration. Called when the user opts out
+    /// via Settings. Leaves any active channel (removes the Island/LS pill)
+    /// and drops the channel manager reference. Safe if called multiple
+    /// times or before setup().
+    func teardown() {
+        if let channelManager, let uuid = activeChannelUUID {
+            channelManager.leaveChannel(channelUUID: uuid)
+            print("[SystemPTT] teardown() — left channel \(uuid)")
+        }
+        activeChannelUUID = nil
+        channelManager = nil
+        isSystemPTTActive = false
+        isTransmitting = false
     }
 
     // MARK: - Channel Management

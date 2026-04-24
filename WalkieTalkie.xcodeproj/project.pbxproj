@@ -3,168 +3,241 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A6010001 /* WalkieTalkieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020001 /* WalkieTalkieApp.swift */; };
-		A6010002 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020002 /* Models.swift */; };
-		A6010003 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020003 /* Channel.swift */; };
-		A6010004 /* VoiceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020004 /* VoiceMessage.swift */; };
-		A6010005 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020005 /* Member.swift */; };
-		A6010006 /* WireMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020006 /* WireMessage.swift */; };
-		A6010007 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020007 /* AudioManager.swift */; };
-		A6010008 /* MultipeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020008 /* MultipeerManager.swift */; };
-		A6010009 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020009 /* WebSocketManager.swift */; };
-		A601000A /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000A /* ConnectionManager.swift */; };
-		A601000B /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000B /* LocationManager.swift */; };
-		A601000C /* TranscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000C /* TranscriptionManager.swift */; };
-		A601000D /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000D /* HapticManager.swift */; };
-		A601000E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000E /* MainView.swift */; };
-		A601000F /* TalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A602000F /* TalkView.swift */; };
-		A6010010 /* ChannelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020010 /* ChannelListView.swift */; };
-		A6010011 /* ChannelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020011 /* ChannelDetailView.swift */; };
-		A6010012 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020012 /* MapView.swift */; };
-		A6010013 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020013 /* SettingsView.swift */; };
-		A6010014 /* PTTButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020014 /* PTTButton.swift */; };
-		A6010015 /* VoiceBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020015 /* VoiceBubble.swift */; };
-		A6010016 /* MemberRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020016 /* MemberRow.swift */; };
-		A6010017 /* ChannelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020017 /* ChannelCard.swift */; };
-		A6010018 /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020018 /* Color+Theme.swift */; };
-		A6010020 /* PTTSystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6020020 /* PTTSystemManager.swift */; };
-		A6010019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6020019 /* Assets.xcassets */; };
+		01EFFB172894516274009DDB /* WireMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A342DA7BE5905633227A1E8C /* WireMessage.swift */; };
+		0807C5EBA633E49C76F9556C /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA136AD82F7FCA1C55F1B16 /* Member.swift */; };
+		0A7D4B8E0627CF59F840736D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD2FF21ADF774E3DCA4A58 /* MainView.swift */; };
+		0EBF16FF635E5F96D76724A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57806DBC7349F0F62FC19282 /* ContentView.swift */; };
+		1B8086B9289CFBBFB53C6E8A /* PTTButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1304AC6FF3C6BEA5A5FFBC3 /* PTTButton.swift */; };
+		1CA3BA23E300A333BB0516BC /* WalkieTalkieApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6AF2DFC9920BFDAB4783F /* WalkieTalkieApp.swift */; };
+		1D398F5160E646C36AFAEEC7 /* VoiceBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AAAA50E6F56725D99D6723 /* VoiceBubble.swift */; };
+		2284A1405E31CA3515CC6D9C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EDCCD44F29DD65BFB51B6E /* Models.swift */; };
+		22B4CD62B9FE3E6F59D85C9D /* PTTSystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E1B04FA58E74DA7AE6824F /* PTTSystemManager.swift */; };
+		24EE688B90583E724FF802B3 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D9F7BE206D8F8361E85804 /* WebSocketManager.swift */; };
+		305619D1042DCD372804A052 /* TranscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F44DF065EF55E226846E4F6 /* TranscriptionManager.swift */; };
+		38A8566A24F630E96B29BB95 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD399D7355F6F5A6B2E8931E /* MapView.swift */; };
+		398D3C640279EDF6FAE90C4F /* ChannelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741D1254ECC86D6C5C3165C1 /* ChannelDetailView.swift */; };
+		4C9D8E6910F89DA2DAB23CD7 /* HollerWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206CF34DCA20A023EE1553B3 /* HollerWatchApp.swift */; };
+		5C951772159E6D6E2A96F2F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 005B032509FBED25ABA57A6F /* Assets.xcassets */; };
+		6431AD077D2769808B585039 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94FB3CC15E7B9CA4B29DD1 /* WatchConnectivityManager.swift */; };
+		6DA3E650B720D127D57C3083 /* WatchAudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352590C6CE7A3E9AE1E0DF30 /* WatchAudioManager.swift */; };
+		700DDD44EFEDA260C7EB7DA6 /* MemberListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283B081389C0A1E0A7589A4A /* MemberListView.swift */; };
+		71C89B847F0634B89898D10C /* ChannelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCFC66152E99E447C30E41E /* ChannelCard.swift */; };
+		76491F13E808C03377C8FCA1 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8A5A4A336AA10CAAA3BD57 /* Channel.swift */; };
+		79A1E6266F6431548FB60E88 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AAEEB8034B11050630825C /* LocationManager.swift */; };
+		7CF9A250626D90B8CA25732C /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B05DAD446FB44409EE5A50 /* HapticManager.swift */; };
+		7E6CF98D097AA9D247920F0D /* HollerWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = DC578A4CE8B7554D0E39722C /* HollerWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7EC514F55E4A6A7FE8F211DE /* MultipeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17304626C342714515497904 /* MultipeerManager.swift */; };
+		808FEB708351D347957D7DC5 /* ChannelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE6EC429EA90577F66F0F0 /* ChannelListView.swift */; };
+		82F52C631A9510EFEC169B27 /* ComplicationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435B6C07871960EE784F0336 /* ComplicationViews.swift */; };
+		83E32B91D0D42D50713E947A /* MemberRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13210157006306AF85E5D636 /* MemberRow.swift */; };
+		85CBB31C2DF975EC748885EC /* TalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B6ED12AB50AD32DF678ACA /* TalkView.swift */; };
+		8CE874A1220ED48B2AE71309 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 510CF33EC38A940CF2D6A702 /* Assets.xcassets */; };
+		95A4263ABCD57E394853DE51 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E04F61FDFD30D0194ADF4 /* SettingsView.swift */; };
+		9C689D28D3F2ACE60A09BADB /* WatchSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F23943F69E6D1E156398F8E /* WatchSyncManager.swift */; };
+		B436A75B22FA35AF0813442E /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B9601A3F8F85239FDEEA8F /* AudioManager.swift */; };
+		BD1214C51003641E2203110B /* WireMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C7B3FE85AA8B5BAF63628C /* WireMessage.swift */; };
+		C3E5D6FE1454FD40B35694BC /* WatchWebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490E6210B59DA6FF50E0E6E /* WatchWebSocketManager.swift */; };
+		C6766300D4073361D076577E /* VoiceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509841B1A3A82BC75DBA8DC /* VoiceMessage.swift */; };
+		E78E6F19F420EC9A66E79796 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C05801C197B42DAC6682EA /* ConnectionManager.swift */; };
+		E95249CD0033C7706EBFAAD4 /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C50B2F8FC1FD92B0A9280 /* Color+Theme.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXFileReference section */
-		A6030001 /* Holler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Holler.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A6020001 /* WalkieTalkieApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkieTalkieApp.swift; sourceTree = "<group>"; };
-		A6020002 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		A6020003 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
-		A6020004 /* VoiceMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessage.swift; sourceTree = "<group>"; };
-		A6020005 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
-		A6020006 /* WireMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireMessage.swift; sourceTree = "<group>"; };
-		A6020007 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
-		A6020008 /* MultipeerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerManager.swift; sourceTree = "<group>"; };
-		A6020009 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
-		A602000A /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
-		A602000B /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		A602000C /* TranscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionManager.swift; sourceTree = "<group>"; };
-		A602000D /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
-		A602000E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		A602000F /* TalkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkView.swift; sourceTree = "<group>"; };
-		A6020010 /* ChannelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListView.swift; sourceTree = "<group>"; };
-		A6020011 /* ChannelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetailView.swift; sourceTree = "<group>"; };
-		A6020012 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		A6020013 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		A6020014 /* PTTButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTButton.swift; sourceTree = "<group>"; };
-		A6020015 /* VoiceBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceBubble.swift; sourceTree = "<group>"; };
-		A6020016 /* MemberRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRow.swift; sourceTree = "<group>"; };
-		A6020017 /* ChannelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCard.swift; sourceTree = "<group>"; };
-		A6020018 /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
-		A6020020 /* PTTSystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTSystemManager.swift; sourceTree = "<group>"; };
-		A6020019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A602001A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A602001B /* WalkieTalkie.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WalkieTalkie.entitlements; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+/* Begin PBXContainerItemProxy section */
+		0DC13BD75F1A3753B63195F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4273CD2A2BB9A47B32F8515A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 45418CA736E6B9AD9AFBFC9A;
+			remoteInfo = HollerWatch;
+		};
+/* End PBXContainerItemProxy section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		A6040001 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
+/* Begin PBXCopyFilesBuildPhase section */
+		2DCB90651EBEC15C2610ABB0 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
 			files = (
+				7E6CF98D097AA9D247920F0D /* HollerWatch.app in Embed Watch Content */,
 			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXFrameworksBuildPhase section */
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		005B032509FBED25ABA57A6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0490E6210B59DA6FF50E0E6E /* WatchWebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWebSocketManager.swift; sourceTree = "<group>"; };
+		07AAAA50E6F56725D99D6723 /* VoiceBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceBubble.swift; sourceTree = "<group>"; };
+		13210157006306AF85E5D636 /* MemberRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRow.swift; sourceTree = "<group>"; };
+		17304626C342714515497904 /* MultipeerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerManager.swift; sourceTree = "<group>"; };
+		1806065C8BDFE474C2BBD032 /* WalkieTalkie.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WalkieTalkie.entitlements; sourceTree = "<group>"; };
+		1F94FB3CC15E7B9CA4B29DD1 /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
+		206CF34DCA20A023EE1553B3 /* HollerWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HollerWatchApp.swift; sourceTree = "<group>"; };
+		24B9601A3F8F85239FDEEA8F /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		2509841B1A3A82BC75DBA8DC /* VoiceMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessage.swift; sourceTree = "<group>"; };
+		283B081389C0A1E0A7589A4A /* MemberListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListView.swift; sourceTree = "<group>"; };
+		2CCFC66152E99E447C30E41E /* ChannelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCard.swift; sourceTree = "<group>"; };
+		31B05DAD446FB44409EE5A50 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		31EDCCD44F29DD65BFB51B6E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		352590C6CE7A3E9AE1E0DF30 /* WatchAudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAudioManager.swift; sourceTree = "<group>"; };
+		36B6ED12AB50AD32DF678ACA /* TalkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkView.swift; sourceTree = "<group>"; };
+		435B6C07871960EE784F0336 /* ComplicationViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationViews.swift; sourceTree = "<group>"; };
+		43C6AF2DFC9920BFDAB4783F /* WalkieTalkieApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkieTalkieApp.swift; sourceTree = "<group>"; };
+		4F6E04F61FDFD30D0194ADF4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		510CF33EC38A940CF2D6A702 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		56DE6EC429EA90577F66F0F0 /* ChannelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListView.swift; sourceTree = "<group>"; };
+		57806DBC7349F0F62FC19282 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5E8A5A4A336AA10CAAA3BD57 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		5F23943F69E6D1E156398F8E /* WatchSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSyncManager.swift; sourceTree = "<group>"; };
+		68F9E1B07A96CBB1748BE271 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		6F44DF065EF55E226846E4F6 /* TranscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionManager.swift; sourceTree = "<group>"; };
+		741D1254ECC86D6C5C3165C1 /* ChannelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetailView.swift; sourceTree = "<group>"; };
+		98C05801C197B42DAC6682EA /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		99DD2FF21ADF774E3DCA4A58 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		A342DA7BE5905633227A1E8C /* WireMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireMessage.swift; sourceTree = "<group>"; };
+		A4D9F7BE206D8F8361E85804 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
+		BA9C50B2F8FC1FD92B0A9280 /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
+		BCA136AD82F7FCA1C55F1B16 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		BF0DE777DA37C2930A5E95D8 /* WalkieTalkie.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = WalkieTalkie.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1C7B3FE85AA8B5BAF63628C /* WireMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireMessage.swift; sourceTree = "<group>"; };
+		CD399D7355F6F5A6B2E8931E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		D1304AC6FF3C6BEA5A5FFBC3 /* PTTButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTButton.swift; sourceTree = "<group>"; };
+		DC578A4CE8B7554D0E39722C /* HollerWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HollerWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2AAEEB8034B11050630825C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		E4E1B04FA58E74DA7AE6824F /* PTTSystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTSystemManager.swift; sourceTree = "<group>"; };
+		FBD1A5DAD08A8C6CD5184EB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		A6050001 /* Root */ = {
+		109AF5BF2194A0957CD2E696 /* HollerWatch */ = {
 			isa = PBXGroup;
 			children = (
-				A6050002 /* WalkieTalkie */,
-				A6050003 /* Products */,
+				510CF33EC38A940CF2D6A702 /* Assets.xcassets */,
+				435B6C07871960EE784F0336 /* ComplicationViews.swift */,
+				57806DBC7349F0F62FC19282 /* ContentView.swift */,
+				206CF34DCA20A023EE1553B3 /* HollerWatchApp.swift */,
+				FBD1A5DAD08A8C6CD5184EB2 /* Info.plist */,
+				283B081389C0A1E0A7589A4A /* MemberListView.swift */,
+				23BC7CCFF2CDE3D80799380B /* Managers */,
+				3CE036FB6CA4816117A476E0 /* Models */,
 			);
+			path = HollerWatch;
 			sourceTree = "<group>";
 		};
-		A6050002 /* WalkieTalkie */ = {
+		11446427E3B338A855356FAD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A6020001 /* WalkieTalkieApp.swift */,
-				A6050004 /* Models */,
-				A6050005 /* Managers */,
-				A6050006 /* Views */,
-				A6050008 /* Extensions */,
-				A6020019 /* Assets.xcassets */,
-				A602001A /* Info.plist */,
-				A602001B /* WalkieTalkie.entitlements */,
-			);
-			path = WalkieTalkie;
-			sourceTree = "<group>";
-		};
-		A6050003 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A6030001 /* Holler.app */,
+				DC578A4CE8B7554D0E39722C /* HollerWatch.app */,
+				BF0DE777DA37C2930A5E95D8 /* WalkieTalkie.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A6050004 /* Models */ = {
+		23BC7CCFF2CDE3D80799380B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				A6020002 /* Models.swift */,
-				A6020003 /* Channel.swift */,
-				A6020004 /* VoiceMessage.swift */,
-				A6020005 /* Member.swift */,
-				A6020006 /* WireMessage.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		A6050005 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				A6020007 /* AudioManager.swift */,
-				A6020008 /* MultipeerManager.swift */,
-				A6020009 /* WebSocketManager.swift */,
-				A602000A /* ConnectionManager.swift */,
-				A602000B /* LocationManager.swift */,
-				A602000C /* TranscriptionManager.swift */,
-				A602000D /* HapticManager.swift */,
-				A6020020 /* PTTSystemManager.swift */,
+				352590C6CE7A3E9AE1E0DF30 /* WatchAudioManager.swift */,
+				1F94FB3CC15E7B9CA4B29DD1 /* WatchConnectivityManager.swift */,
+				0490E6210B59DA6FF50E0E6E /* WatchWebSocketManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		A6050006 /* Views */ = {
+		285B4F3502198F7E776DA2D7 /* WalkieTalkie */ = {
 			isa = PBXGroup;
 			children = (
-				A602000E /* MainView.swift */,
-				A602000F /* TalkView.swift */,
-				A6020010 /* ChannelListView.swift */,
-				A6020011 /* ChannelDetailView.swift */,
-				A6020012 /* MapView.swift */,
-				A6020013 /* SettingsView.swift */,
-				A6050007 /* Components */,
+				005B032509FBED25ABA57A6F /* Assets.xcassets */,
+				68F9E1B07A96CBB1748BE271 /* Info.plist */,
+				1806065C8BDFE474C2BBD032 /* WalkieTalkie.entitlements */,
+				43C6AF2DFC9920BFDAB4783F /* WalkieTalkieApp.swift */,
+				F52B97E51F68C128E52D3ABD /* Extensions */,
+				81F411D5087FFA656230D9C7 /* Managers */,
+				B5779D4929AF709B35A58741 /* Models */,
+				47EBB6838A5F256BFF30876D /* Views */,
+			);
+			path = WalkieTalkie;
+			sourceTree = "<group>";
+		};
+		31F6689F1ED9689E02BE82AF = {
+			isa = PBXGroup;
+			children = (
+				109AF5BF2194A0957CD2E696 /* HollerWatch */,
+				285B4F3502198F7E776DA2D7 /* WalkieTalkie */,
+				11446427E3B338A855356FAD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3CE036FB6CA4816117A476E0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A342DA7BE5905633227A1E8C /* WireMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		47EBB6838A5F256BFF30876D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				741D1254ECC86D6C5C3165C1 /* ChannelDetailView.swift */,
+				56DE6EC429EA90577F66F0F0 /* ChannelListView.swift */,
+				99DD2FF21ADF774E3DCA4A58 /* MainView.swift */,
+				CD399D7355F6F5A6B2E8931E /* MapView.swift */,
+				4F6E04F61FDFD30D0194ADF4 /* SettingsView.swift */,
+				36B6ED12AB50AD32DF678ACA /* TalkView.swift */,
+				D6DCD9370A0A45B230B45B77 /* Components */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		A6050007 /* Components */ = {
+		81F411D5087FFA656230D9C7 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				A6020014 /* PTTButton.swift */,
-				A6020015 /* VoiceBubble.swift */,
-				A6020016 /* MemberRow.swift */,
-				A6020017 /* ChannelCard.swift */,
+				24B9601A3F8F85239FDEEA8F /* AudioManager.swift */,
+				98C05801C197B42DAC6682EA /* ConnectionManager.swift */,
+				31B05DAD446FB44409EE5A50 /* HapticManager.swift */,
+				E2AAEEB8034B11050630825C /* LocationManager.swift */,
+				17304626C342714515497904 /* MultipeerManager.swift */,
+				E4E1B04FA58E74DA7AE6824F /* PTTSystemManager.swift */,
+				6F44DF065EF55E226846E4F6 /* TranscriptionManager.swift */,
+				5F23943F69E6D1E156398F8E /* WatchSyncManager.swift */,
+				A4D9F7BE206D8F8361E85804 /* WebSocketManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		B5779D4929AF709B35A58741 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5E8A5A4A336AA10CAAA3BD57 /* Channel.swift */,
+				BCA136AD82F7FCA1C55F1B16 /* Member.swift */,
+				31EDCCD44F29DD65BFB51B6E /* Models.swift */,
+				2509841B1A3A82BC75DBA8DC /* VoiceMessage.swift */,
+				C1C7B3FE85AA8B5BAF63628C /* WireMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D6DCD9370A0A45B230B45B77 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2CCFC66152E99E447C30E41E /* ChannelCard.swift */,
+				13210157006306AF85E5D636 /* MemberRow.swift */,
+				D1304AC6FF3C6BEA5A5FFBC3 /* PTTButton.swift */,
+				07AAAA50E6F56725D99D6723 /* VoiceBubble.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		A6050008 /* Extensions */ = {
+		F52B97E51F68C128E52D3ABD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A6020018 /* Color+Theme.swift */,
+				BA9C50B2F8FC1FD92B0A9280 /* Color+Theme.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -172,111 +245,168 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A60000 /* WalkieTalkie */ = {
+		45418CA736E6B9AD9AFBFC9A /* HollerWatch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A6070001 /* Build configuration list for PBXNativeTarget "WalkieTalkie" */;
+			buildConfigurationList = 03576ECBBDBFE88DB65CA439 /* Build configuration list for PBXNativeTarget "HollerWatch" */;
 			buildPhases = (
-				A6060001 /* Sources */,
-				A6040001 /* Frameworks */,
-				A6060002 /* Resources */,
+				B6106F3C0E4EA2CD4803E1DA /* Sources */,
+				FF08E9BD6E4896D231CA863C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
+			name = HollerWatch;
+			packageProductDependencies = (
+			);
+			productName = HollerWatch;
+			productReference = DC578A4CE8B7554D0E39722C /* HollerWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8485C165DB930684087755A9 /* WalkieTalkie */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEB3D40BA813ED70B91D72B6 /* Build configuration list for PBXNativeTarget "WalkieTalkie" */;
+			buildPhases = (
+				FACA2C56D75B30E739AFF4CE /* Sources */,
+				78EC04CD54C49D056FD656D1 /* Resources */,
+				2DCB90651EBEC15C2610ABB0 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				39BF4EC7D576B43AE872C575 /* PBXTargetDependency */,
+			);
 			name = WalkieTalkie;
+			packageProductDependencies = (
+			);
 			productName = WalkieTalkie;
-			productReference = A6030001 /* Holler.app */;
+			productReference = BF0DE777DA37C2930A5E95D8 /* WalkieTalkie.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A6080001 /* Project object */ = {
+		4273CD2A2BB9A47B32F8515A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1600;
+				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					A60000 = {
-						CreatedOnToolsVersion = 16.0;
+					45418CA736E6B9AD9AFBFC9A = {
+						DevelopmentTeam = 6SULXSSZL7;
+					};
+					8485C165DB930684087755A9 = {
+						DevelopmentTeam = 6SULXSSZL7;
 					};
 				};
 			};
-			buildConfigurationList = A6070002 /* Build configuration list for PBXProject "WalkieTalkie" */;
-			compatibilityVersion = "Xcode 14.0";
+			buildConfigurationList = 7F87489C4311EFE6A3E60587 /* Build configuration list for PBXProject "WalkieTalkie" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
-			mainGroup = A6050001 /* Root */;
-			productRefGroup = A6050003 /* Products */;
+			mainGroup = 31F6689F1ED9689E02BE82AF;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 11446427E3B338A855356FAD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A60000 /* WalkieTalkie */,
+				45418CA736E6B9AD9AFBFC9A /* HollerWatch */,
+				8485C165DB930684087755A9 /* WalkieTalkie */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A6060002 /* Resources */ = {
+		78EC04CD54C49D056FD656D1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6010019 /* Assets.xcassets in Resources */,
+				5C951772159E6D6E2A96F2F8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF08E9BD6E4896D231CA863C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CE874A1220ED48B2AE71309 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A6060001 /* Sources */ = {
+		B6106F3C0E4EA2CD4803E1DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6010001 /* WalkieTalkieApp.swift in Sources */,
-				A6010002 /* Models.swift in Sources */,
-				A6010003 /* Channel.swift in Sources */,
-				A6010004 /* VoiceMessage.swift in Sources */,
-				A6010005 /* Member.swift in Sources */,
-				A6010006 /* WireMessage.swift in Sources */,
-				A6010007 /* AudioManager.swift in Sources */,
-				A6010008 /* MultipeerManager.swift in Sources */,
-				A6010009 /* WebSocketManager.swift in Sources */,
-				A601000A /* ConnectionManager.swift in Sources */,
-				A601000B /* LocationManager.swift in Sources */,
-				A601000C /* TranscriptionManager.swift in Sources */,
-				A601000D /* HapticManager.swift in Sources */,
-				A601000E /* MainView.swift in Sources */,
-				A601000F /* TalkView.swift in Sources */,
-				A6010010 /* ChannelListView.swift in Sources */,
-				A6010011 /* ChannelDetailView.swift in Sources */,
-				A6010012 /* MapView.swift in Sources */,
-				A6010013 /* SettingsView.swift in Sources */,
-				A6010014 /* PTTButton.swift in Sources */,
-				A6010015 /* VoiceBubble.swift in Sources */,
-				A6010016 /* MemberRow.swift in Sources */,
-				A6010017 /* ChannelCard.swift in Sources */,
-				A6010018 /* Color+Theme.swift in Sources */,
-				A6010020 /* PTTSystemManager.swift in Sources */,
+				82F52C631A9510EFEC169B27 /* ComplicationViews.swift in Sources */,
+				0EBF16FF635E5F96D76724A2 /* ContentView.swift in Sources */,
+				4C9D8E6910F89DA2DAB23CD7 /* HollerWatchApp.swift in Sources */,
+				700DDD44EFEDA260C7EB7DA6 /* MemberListView.swift in Sources */,
+				6DA3E650B720D127D57C3083 /* WatchAudioManager.swift in Sources */,
+				6431AD077D2769808B585039 /* WatchConnectivityManager.swift in Sources */,
+				C3E5D6FE1454FD40B35694BC /* WatchWebSocketManager.swift in Sources */,
+				01EFFB172894516274009DDB /* WireMessage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FACA2C56D75B30E739AFF4CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B436A75B22FA35AF0813442E /* AudioManager.swift in Sources */,
+				76491F13E808C03377C8FCA1 /* Channel.swift in Sources */,
+				71C89B847F0634B89898D10C /* ChannelCard.swift in Sources */,
+				398D3C640279EDF6FAE90C4F /* ChannelDetailView.swift in Sources */,
+				808FEB708351D347957D7DC5 /* ChannelListView.swift in Sources */,
+				E95249CD0033C7706EBFAAD4 /* Color+Theme.swift in Sources */,
+				E78E6F19F420EC9A66E79796 /* ConnectionManager.swift in Sources */,
+				7CF9A250626D90B8CA25732C /* HapticManager.swift in Sources */,
+				79A1E6266F6431548FB60E88 /* LocationManager.swift in Sources */,
+				0A7D4B8E0627CF59F840736D /* MainView.swift in Sources */,
+				38A8566A24F630E96B29BB95 /* MapView.swift in Sources */,
+				0807C5EBA633E49C76F9556C /* Member.swift in Sources */,
+				83E32B91D0D42D50713E947A /* MemberRow.swift in Sources */,
+				2284A1405E31CA3515CC6D9C /* Models.swift in Sources */,
+				7EC514F55E4A6A7FE8F211DE /* MultipeerManager.swift in Sources */,
+				1B8086B9289CFBBFB53C6E8A /* PTTButton.swift in Sources */,
+				22B4CD62B9FE3E6F59D85C9D /* PTTSystemManager.swift in Sources */,
+				95A4263ABCD57E394853DE51 /* SettingsView.swift in Sources */,
+				85CBB31C2DF975EC748885EC /* TalkView.swift in Sources */,
+				305619D1042DCD372804A052 /* TranscriptionManager.swift in Sources */,
+				1D398F5160E646C36AFAEEC7 /* VoiceBubble.swift in Sources */,
+				C6766300D4073361D076577E /* VoiceMessage.swift in Sources */,
+				1CA3BA23E300A333BB0516BC /* WalkieTalkieApp.swift in Sources */,
+				9C689D28D3F2ACE60A09BADB /* WatchSyncManager.swift in Sources */,
+				24EE688B90583E724FF802B3 /* WebSocketManager.swift in Sources */,
+				BD1214C51003641E2203110B /* WireMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		39BF4EC7D576B43AE872C575 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 45418CA736E6B9AD9AFBFC9A /* HollerWatch */;
+			targetProxy = 0DC13BD75F1A3753B63195F7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		A6090001 /* Debug */ = {
+		3BCA7584C4328AC052A9B6FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -303,17 +433,18 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 32;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6SULXSSZL7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"DEBUG=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -322,24 +453,58 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
-		A6090002 /* Release */ = {
+		6EBE37487B1F25E1FC21103F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = WalkieTalkie/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.holler;
+				SDKROOT = iphoneos;
+				SUPPORTED_DESTINATIONS = iphone;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		9397A80429F59A12326043A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HollerWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.holler.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		BC76C1E0D29A6572068E20E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -366,11 +531,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 32;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6SULXSSZL7;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -379,96 +545,80 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
-		A6090003 /* Debug */ = {
+		FBD8C402BAD92B6916CD7F38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6SULXSSZL7;
-				CURRENT_PROJECT_VERSION = 8;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = WalkieTalkie/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.holler;
-				PRODUCT_NAME = Holler;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				INFOPLIST_FILE = HollerWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.holler.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
-		A6090004 /* Release */ = {
+		FF62F2CA4692B1D36CE9BAC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WalkieTalkie/WalkieTalkie.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6SULXSSZL7;
-				CURRENT_PROJECT_VERSION = 8;
-				GENERATE_INFOPLIST_FILE = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = WalkieTalkie/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.holler;
-				PRODUCT_NAME = Holler;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SDKROOT = iphoneos;
+				SUPPORTED_DESTINATIONS = iphone;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A6070002 /* Build configuration list for PBXProject "WalkieTalkie" */ = {
+		03576ECBBDBFE88DB65CA439 /* Build configuration list for PBXNativeTarget "HollerWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A6090001 /* Debug */,
-				A6090002 /* Release */,
+				FBD8C402BAD92B6916CD7F38 /* Debug */,
+				9397A80429F59A12326043A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		A6070001 /* Build configuration list for PBXNativeTarget "WalkieTalkie" */ = {
+		7F87489C4311EFE6A3E60587 /* Build configuration list for PBXProject "WalkieTalkie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A6090003 /* Debug */,
-				A6090004 /* Release */,
+				3BCA7584C4328AC052A9B6FA /* Debug */,
+				BC76C1E0D29A6572068E20E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
+		};
+		FEB3D40BA813ED70B91D72B6 /* Build configuration list for PBXNativeTarget "WalkieTalkie" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EBE37487B1F25E1FC21103F /* Debug */,
+				FF62F2CA4692B1D36CE9BAC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = A6080001 /* Project object */;
+	rootObject = 4273CD2A2BB9A47B32F8515A /* Project object */;
 }

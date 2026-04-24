@@ -17,9 +17,19 @@ struct HollerApp: App {
             print("[App] Notification permission granted: \(granted)")
         }
 
-        // Initialize system PTT (Apple PushToTalk framework)
-        PTTSystemManager.shared.setup()
+        // Initialize system PTT (Apple PushToTalk framework) only if user
+        // has opted in. Default is OFF (beta feedback 2026-04-23) — the
+        // app's background-audio autoplay works independently of this.
+        if AppSettings.shared.systemPTTEnabled {
+            PTTSystemManager.shared.setup()
+        }
+
+        // Initialize Watch sync
+        _ = WatchSyncManager.shared
+
     }
+
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
@@ -38,6 +48,8 @@ struct HollerApp: App {
             .onOpenURL { url in
                 handleIncomingURL(url)
             }
+            // PTT pill stays active in background (that's the point — talk from lock screen).
+            // To dismiss: tap the pill and hit the X, or disconnect from the channel in-app.
         }
     }
 
